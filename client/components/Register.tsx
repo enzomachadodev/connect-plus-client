@@ -4,6 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
+import { useMutation, useQueryClient } from "react-query";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import api from "@/services/api";
 
 interface IRegisterForm {
 	name: string;
@@ -27,6 +32,8 @@ const schema = yup
 	.required();
 
 const Register = () => {
+	const [isDisabled, setIsDisbled] = useState(false);
+
 	const {
 		reset,
 		register,
@@ -36,25 +43,53 @@ const Register = () => {
 		resolver: yupResolver(schema),
 	});
 
+	const { mutate } = useMutation(
+		async ({ name, email, password, profilePicture }: IRegisterForm) =>
+			await axios.post("http://localhost:3001/users", {
+				name,
+				email,
+				password,
+				photoUrl: profilePicture,
+			}),
+		{
+			onError: (error) => {
+				if (error instanceof AxiosError) {
+					toast.dismiss();
+					toast.error(error.response?.data.message);
+					console.log(error);
+				}
+				setIsDisbled(false);
+			},
+			onSuccess: (data) => {
+				toast.dismiss();
+				toast.success("Account created successfully!");
+				setIsDisbled(false);
+				reset();
+			},
+		}
+	);
+
 	const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
-		reset();
+		toast.loading("Creating your account...");
+		setIsDisbled(true);
+		mutate(data);
 	};
 
 	return (
-		<div className="rounded-xl border border-red-50 w-5/6 py-4 px-4 shadow-lg my-8">
+		<div className="rounded-xl border border-red-50 w-5/6 py-4 px-4 shadow-lg">
 			<h3 className="font-bold text-4xl my-4">Register now!</h3>
 			<span className="text-zinc-300">Be part of our community</span>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="my-4">
+				<div className="mt-4">
 					<label htmlFor="" className="text-start">
 						Name:
 					</label>
 					<input
 						type="text"
-						className="pl-2 w-full h-12 rounded-md"
+						className="pl-2 w-full h-10 rounded-md"
 						{...register("name")}
 					/>
-					<p className="text-red-500 h-4">{errors.name?.message}</p>
+					<p className="text-red-500 h-6">{errors.name?.message}</p>
 				</div>
 				<div>
 					<label htmlFor="" className="text-start">
@@ -62,43 +97,46 @@ const Register = () => {
 					</label>
 					<input
 						type="text"
-						className="pl-2 w-full h-12 rounded-md"
+						className="pl-2 w-full h-10 rounded-md"
 						{...register("profilePicture")}
 					/>
-					<p className="text-red-500 h-4">{errors.profilePicture?.message}</p>
+					<p className="text-red-500 h-6 ">{errors.profilePicture?.message}</p>
 				</div>
-				<div className="my-4">
+				<div>
 					<label htmlFor="" className="text-start">
 						Email:
 					</label>
 					<input
 						type="email"
-						className="pl-2 w-full h-12 rounded-md"
+						className="pl-2 w-full h-10 rounded-md"
 						{...register("email")}
 					/>
-					<p className="text-red-500 h-4">{errors.email?.message}</p>
+					<p className="text-red-500 h-6">{errors.email?.message}</p>
 				</div>
-				<div className="my-4">
+				<div>
 					<label htmlFor="">Password:</label>
 					<input
 						type="password"
-						className="pl-2 w-full h-12 rounded-md"
+						className="pl-2 w-full h-10 rounded-md"
 						{...register("password")}
 					/>
-					<p className="text-red-500 h-4">{errors.password?.message}</p>
+					<p className="text-red-500 h-6">{errors.password?.message}</p>
 				</div>
-				<div className="my-4">
-					<label htmlFor="">Confirm password:</label>
+				<div>
+					<label htmlFor="" className="">
+						Confirm password:
+					</label>
 					<input
 						type="password"
-						className="pl-2 w-full h-12 rounded-md"
+						className="pl-2 w-full h-10 rounded-md"
 						{...register("confirmPassword")}
 					/>
-					<p className="text-red-500 h-4">{errors.confirmPassword?.message}</p>
+					<p className="text-red-500 h-6">{errors.confirmPassword?.message}</p>
 				</div>
 				<button
 					type="submit"
-					className="w-full h-12 rounded-md bg-slate-900 border border-slate-500 hover:bg-slate-800"
+					className=" mt-6 w-full h-12 rounded-md bg-slate-900 border border-slate-500 hover:bg-slate-800 disabled:opacity-50"
+					disabled={isDisabled}
 				>
 					Sign up
 				</button>

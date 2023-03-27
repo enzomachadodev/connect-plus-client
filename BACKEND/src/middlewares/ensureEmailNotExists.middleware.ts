@@ -12,7 +12,7 @@ const ensureEmailNotExistsMiddleware = async (req: Request, res: Response, next:
 			},
 		});
 		if (user) {
-			throw new AppError("This Email already in use", 402);
+			throw new AppError("This Email already in use", 409);
 		}
 	}
 

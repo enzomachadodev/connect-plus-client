@@ -31,7 +31,7 @@ const Login = () => {
 		reset();
 	};
 	return (
-		<div className="rounded-xl border border-red-50 w-5/6 py-4 px-4 shadow-lg ">
+		<div className="rounded-xl border border-red-50 w-5/6 py-4 px-4 shadow-lg">
 			<h3 className="font-bold text-4xl my-4">Hello Again!</h3>
 			<span className="text-zinc-300">Make login to access your account</span>
 			<form onSubmit={handleSubmit(onSubmit)}>

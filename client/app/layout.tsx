@@ -1,6 +1,12 @@
+"use client";
+
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
+import { useTheme } from "next-themes";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-roboto" });
 
@@ -10,10 +16,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+	const { theme } = useTheme();
 	return (
 		<html lang="en">
 			<body className={`h-screen ${inter.variable} font-sans bg-gray-100 dark:bg-gray-900`}>
 				<Providers>{children}</Providers>
+				<ToastContainer theme={theme === "light" ? "light" : "dark"} />
 			</body>
 		</html>
 	);

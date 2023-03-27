@@ -10,7 +10,7 @@ export default function Home() {
 	return (
 		<div className="w-full h-full flex items-center justify-center">
 			<div className="hidden md:flex md:w-1/2 h-full border-red-500 border-2"></div>
-			<div className="w-full h-screen md:w-1/2 flex justify-center items-start sm:items-center">
+			<div className="w-full h-full md:w-1/2 flex flex-col justify-center items-center overflow-auto">
 				{pathname === "/register" ? <Register /> : <Login />}
 			</div>
 		</div>

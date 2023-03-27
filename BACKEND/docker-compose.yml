@@ -6,6 +6,7 @@ services:
         ports:
             - "5435:5432"
         container_name: "db-postgres-s1"
+        restart: "always"
         volumes:
             - ./database-s1-api:/var/lib/postgresql/data
         environment:
