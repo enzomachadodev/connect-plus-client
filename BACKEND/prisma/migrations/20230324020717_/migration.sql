@@ -1,8 +1,0 @@
--- AlterTable
-ALTER TABLE "Client" ALTER COLUMN "name" SET DATA TYPE TEXT;
-
--- AlterTable
-ALTER TABLE "Contact" ALTER COLUMN "name" SET DATA TYPE TEXT;
-
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "name" SET DATA TYPE TEXT;

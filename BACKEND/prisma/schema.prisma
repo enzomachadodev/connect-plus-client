@@ -16,18 +16,18 @@ model User {
   name      String   
   email     String   @unique
   password  String
-  photoUrl  String   @default("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
+  avatarUrl  String   @default("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
   isAdmin   Boolean  @default(false)
   isActive Boolean   @default(true)
-  clients   Client[]
+  customers   Customer[]
 }
 
-model Client {
+model Customer {
   id        String    @id @default(uuid())
   createdAt DateTime  @default(now())
   name      String
   email     String[]  @unique
-  photoUrl  String    @default("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
+  avatarUrl  String    @default("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
   phone     String[]  @unique
   user      User      @relation(fields: [userId], references: [id])
   userId    String
@@ -39,7 +39,8 @@ model Contact {
   createdAt DateTime @default(now())
   name      String
   email     String[] @unique
-  photoUrl  String   @default("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
-  client    Client   @relation(fields: [clientId], references: [id])
-  clientId  String
+  avatarUrl  String   @default("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
+  phone     String[]  @unique
+  customer    Customer   @relation(fields: [customerId], references: [id])
+  customerId  String
 }

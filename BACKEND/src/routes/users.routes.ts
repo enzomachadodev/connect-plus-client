@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createUserController } from "../controllers/users/createUser.controller";
 import { deleteUserController } from "../controllers/users/deleteUser.controller";
+import { listCustomersofUserController } from "../controllers/users/listCustomersOfUser.controller";
 import { listUsersController } from "../controllers/users/listUsers.controller";
 import { retrieveUserController } from "../controllers/users/retrieveUser.controller";
 import { updateUserController } from "../controllers/users/updateUser.controller";
@@ -23,8 +24,9 @@ userRoutes.post(
 	ensureEmailNotExistsMiddleware,
 	createUserController
 );
-userRoutes.get("", ensureAuthMiddleware, retrieveUserController);
-userRoutes.get("/list", ensureAuthMiddleware, ensureAdminOrOwnerMiddleware, listUsersController);
+userRoutes.get("", ensureAuthMiddleware, ensureAdminOrOwnerMiddleware, listUsersController);
+userRoutes.get("/profile", ensureAuthMiddleware, retrieveUserController);
+userRoutes.get("/customers", ensureAuthMiddleware, listCustomersofUserController);
 userRoutes.patch(
 	"/:id",
 	ensureAuthMiddleware,

@@ -1,33 +1,25 @@
-import * as yup from "yup";
-import { IUserRequest, IUserResponse, IUserUpdate } from "../interfaces/users.interface";
+import { z } from "zod";
 
-const userRequestSerializer = yup.object().shape({
-	email: yup.string().email().required(),
-	name: yup.string().required(),
-	password: yup.string().required(),
-	photoUrl: yup.string(),
+export const userRequestSerializer = z.object({
+	email: z.string().email(),
+	name: z.string(),
+	password: z.string(),
+	avatarUrl: z.string(),
 });
 
-const userResponseSerializer = yup.object().shape({
-	id: yup.string().required(),
-	createdAt: yup.date().required(),
-	name: yup.string().required(),
-	email: yup.string().email().required(),
-	photoUrl: yup.string().required(),
+export const userResponseSerializer = z.object({
+	id: z.string(),
+	createdAt: z.date(),
+	name: z.string(),
+	email: z.string().email(),
+	avatarUrl: z.string(),
 });
 
-const userUpdateRequestSerializer = yup.object().shape({
-	name: yup.string(),
-	email: yup.string().email(),
-	password: yup.string(),
-	photoUrl: yup.string(),
+export const userUpdateRequestSerializer = z.object({
+	name: z.string().optional(),
+	email: z.string().email().optional(),
+	password: z.string().optional(),
+	avatarUrl: z.string().optional(),
 });
 
-const listUsersResponseSerializer = yup.array(userResponseSerializer);
-
-export {
-	userRequestSerializer,
-	userResponseSerializer,
-	userUpdateRequestSerializer,
-	listUsersResponseSerializer,
-};
+export const listUsersResponseSerializer = z.array(userResponseSerializer);

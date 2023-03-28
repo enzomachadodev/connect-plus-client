@@ -5,13 +5,13 @@ services:
         image: postgres:alpine
         ports:
             - "5435:5432"
-        container_name: "db-postgres-s1"
+        container_name: "db-postgres-connectplus"
         restart: "always"
         volumes:
-            - ./database-s1-api:/var/lib/postgresql/data
+            - ./database-connectplus-api:/var/lib/postgresql/data
         environment:
             POSTGRES_USER: pguser
             POSTGRES_PASSWORD: pgpassword
 
 volumes:
-    db-postgres-s1-api:
+    database-connectplus-api:

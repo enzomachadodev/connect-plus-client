@@ -2,23 +2,21 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../prisma/seed";
 import { AppError } from "../errors/appError";
 
-export const ensureEmailNotExistsMiddleware = async (
+export const ensureCustomerEmailNotExistsMiddleware = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
 	const { email } = req.body;
 
-	if (email) {
-		const user = await prisma.user.findUnique({
+	email.array.forEach(async (e: string) => {
+		const customer = await prisma.customer.findUnique({
 			where: {
-				email: email,
+				email: e,
 			},
 		});
-		if (user) {
+		if (customer) {
 			throw new AppError("This Email already in use", 409);
 		}
-	}
-
-	return next();
+	});
 };

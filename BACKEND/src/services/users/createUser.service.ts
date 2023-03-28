@@ -3,11 +3,11 @@ import { prisma } from "../../../prisma/seed";
 import { IUserRequest, IUserResponse } from "../../interfaces/users.interface";
 import { userResponseSerializer } from "../../serializers/users.serializer";
 
-const createUserService = async ({
+export const createUserService = async ({
 	name,
 	email,
 	password,
-	photoUrl,
+	avatarUrl,
 }: IUserRequest): Promise<IUserResponse> => {
 	const hashPassword = await hash(password, 10);
 
@@ -16,15 +16,11 @@ const createUserService = async ({
 			name,
 			email,
 			password: hashPassword,
-			photoUrl,
+			avatarUrl,
 		},
 	});
 
-	const validatedData = await userResponseSerializer.validate(newUser, {
-		stripUnknown: true,
-	});
+	const validatedData = userResponseSerializer.parse(newUser);
 
 	return validatedData;
 };
-
-export { createUserService };

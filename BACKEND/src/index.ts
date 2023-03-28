@@ -5,6 +5,7 @@ import cors from "cors";
 import { handleError } from "./errors/handleError";
 import { userRoutes } from "./routes/users.routes";
 import { sessionRoutes } from "./routes/session.routes";
+import { customerRoutes } from "./routes/customers.routes";
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use("/login", sessionRoutes);
 app.use("/users", userRoutes);
+app.use("/customers", customerRoutes);
 
 app.use(handleError);
 app.listen(3001, () => {

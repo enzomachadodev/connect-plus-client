@@ -1,9 +1,6 @@
-import * as yup from "yup";
-import { ISessionRequest } from "../interfaces/session.interface";
+import { z } from "zod";
 
-const sessionRequestSerializer = yup.object().shape({
-	email: yup.string().email().required(),
-	password: yup.string().required(),
+export const sessionRequestSerializer = z.object({
+	email: z.string().email(),
+	password: z.string(),
 });
-
-export { sessionRequestSerializer };

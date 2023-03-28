@@ -1,22 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import { AnyObject } from "yup";
-import { AppError } from "../errors/appError";
+import { ZodSchema } from "zod";
 
-const ensureDataIsValidMiddleware =
-	(schema: AnyObject) => async (req: Request, res: Response, next: NextFunction) => {
-		try {
-			const validatedData = await schema.validate(req.body, {
-				abortEarly: false,
-				stripUnknown: true,
-			});
+export const ensureDataIsValidMiddleware =
+	(schema: ZodSchema) => async (req: Request, res: Response, next: NextFunction) => {
+		const result = schema.safeParse(req.body);
 
-			req.body = validatedData;
-			console.log("\n", req.body, "\n");
-			return next();
-		} catch (error: any) {
-			console.log(error);
-			throw new AppError(error.errors, 400);
+		if (!result.success) {
+			const formattedError = result.error.format();
+
+			return res.status(400).json(formattedError);
 		}
-	};
 
-export { ensureDataIsValidMiddleware };
+		req.body = result.data;
+		return next();
+	};

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../prisma/seed";
 import { AppError } from "../errors/appError";
 
-const ensureUserIsActive = async (req: Request, res: Response, next: NextFunction) => {
+export const ensureUserIsActive = async (req: Request, res: Response, next: NextFunction) => {
 	const id = req.params.id;
 
 	if (id) {
@@ -12,11 +12,9 @@ const ensureUserIsActive = async (req: Request, res: Response, next: NextFunctio
 			},
 		});
 		if (!user?.isActive) {
-			throw new AppError("This account has been disabled");
+			throw new AppError("This account has been disabled", 404);
 		}
 	}
 
 	return next();
 };
-
-export { ensureUserIsActive };

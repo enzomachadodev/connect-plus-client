@@ -2,23 +2,23 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../prisma/seed";
 import { AppError } from "../errors/appError";
 
-export const ensureUserExistsMiddleware = async (
+export const ensureCustomerExistsMiddleware = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
 	const id = req.params.id;
 
-	const user = await prisma.user.findUnique({
+	const customer = await prisma.customer.findUnique({
 		where: {
 			id: id,
 		},
 	});
-	if (!user) {
-		throw new AppError("User not found", 404);
+	if (!customer) {
+		throw new AppError("Customer not found", 404);
 	}
 
-	req.user = user;
+	req.customer = customer;
 
 	return next();
 };

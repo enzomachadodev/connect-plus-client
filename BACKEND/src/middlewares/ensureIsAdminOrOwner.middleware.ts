@@ -2,7 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/appError";
 import { prisma } from "../../prisma/seed";
 
-const ensureAdminOrOwnerMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const ensureAdminOrOwnerMiddleware = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: req.userId,
@@ -19,5 +23,3 @@ const ensureAdminOrOwnerMiddleware = async (req: Request, res: Response, next: N
 
 	return next();
 };
-
-export { ensureAdminOrOwnerMiddleware };

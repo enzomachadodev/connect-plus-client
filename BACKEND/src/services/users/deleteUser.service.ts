@@ -1,6 +1,6 @@
 import { prisma } from "../../../prisma/seed";
 
-const deleteUserService = async (userId: string) => {
+export const deleteUserService = async (userId: string) => {
 	await prisma.user.update({
 		where: {
 			id: userId,
@@ -10,5 +10,3 @@ const deleteUserService = async (userId: string) => {
 		},
 	});
 };
-
-export { deleteUserService };

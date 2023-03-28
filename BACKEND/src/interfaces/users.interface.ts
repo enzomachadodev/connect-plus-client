@@ -1,32 +1,30 @@
-interface IUserRequest {
+export interface IUserRequest {
 	name: string;
 	email: string;
 	password: string;
-	photoUrl?: string;
+	avatarUrl: string;
 }
 
-interface IUserUpdate {
+export interface IUserUpdate {
 	name?: string;
 	email?: string;
 	password?: string;
-	photoUrl?: string;
+	avatarUrl: string;
 }
 
-interface IUserResponse {
+export interface IUserResponse {
 	id: string;
 	createdAt: Date;
 	name: string;
 	email: string;
-	photoUrl: string;
+	avatarUrl: string;
 }
 
-interface IUserRetrieve {
+export interface IUserRetrieve {
 	id: string;
 	createdAt: Date;
 	password: string;
 	name: string;
 	email: string;
-	photoUrl: string;
+	avatarUrl: string;
 }
-
-export { IUserRequest, IUserUpdate, IUserResponse, IUserRetrieve };
