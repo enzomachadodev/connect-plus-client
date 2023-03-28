@@ -4,19 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import api from "@/services/api";
-
-interface IRegisterForm {
-	name: string;
-	profilePicture?: string;
-	email: string;
-	password: string;
-	confirmPassword: string;
-}
+import { IUserRegisterForm } from "@/types/users";
 
 const schema = yup
 	.object({
@@ -31,7 +23,7 @@ const schema = yup
 	})
 	.required();
 
-const Register = () => {
+export const Register = () => {
 	const [isDisabled, setIsDisbled] = useState(false);
 
 	const {
@@ -39,17 +31,17 @@ const Register = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<IRegisterForm>({
+	} = useForm<IUserRegisterForm>({
 		resolver: yupResolver(schema),
 	});
 
 	const { mutate } = useMutation(
-		async ({ name, email, password, profilePicture }: IRegisterForm) =>
+		async ({ name, email, password, avatarUrl }: IUserRegisterForm) =>
 			await axios.post("http://localhost:3001/users", {
 				name,
 				email,
 				password,
-				photoUrl: profilePicture,
+				photoUrl: avatarUrl,
 			}),
 		{
 			onError: (error) => {
@@ -69,7 +61,7 @@ const Register = () => {
 		}
 	);
 
-	const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
+	const onSubmit: SubmitHandler<IUserRegisterForm> = (data) => {
 		toast.loading("Creating your account...");
 		setIsDisbled(true);
 		mutate(data);
@@ -98,9 +90,9 @@ const Register = () => {
 					<input
 						type="text"
 						className="pl-2 w-full h-10 rounded-md"
-						{...register("profilePicture")}
+						{...register("avatarUrl")}
 					/>
-					<p className="text-red-500 h-6 ">{errors.profilePicture?.message}</p>
+					<p className="text-red-500 h-6 ">{errors.avatarUrl?.message}</p>
 				</div>
 				<div>
 					<label htmlFor="" className="text-start">
@@ -151,5 +143,3 @@ const Register = () => {
 		</div>
 	);
 };
-
-export default Register;

@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Providers from "@/components/Providers";
+import { Providers } from "@/components/Providers";
 import { useTheme } from "next-themes";
 import { ToastContainer } from "react-toastify";
 
@@ -19,7 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	const { theme } = useTheme();
 	return (
 		<html lang="en">
-			<body className={`h-screen ${inter.variable} font-sans bg-gray-100 dark:bg-gray-900`}>
+			<body
+				className={`h-screen ${inter.variable} font-sans text-black dark:text-white bg-white dark:bg-gray-900`}
+			>
 				<Providers>{children}</Providers>
 				<ToastContainer theme={theme === "light" ? "light" : "dark"} />
 			</body>
