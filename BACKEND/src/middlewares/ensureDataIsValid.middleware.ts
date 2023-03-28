@@ -11,8 +11,10 @@ const ensureDataIsValidMiddleware =
 			});
 
 			req.body = validatedData;
+			console.log("\n", req.body, "\n");
 			return next();
 		} catch (error: any) {
+			console.log(error);
 			throw new AppError(error.errors, 400);
 		}
 	};
