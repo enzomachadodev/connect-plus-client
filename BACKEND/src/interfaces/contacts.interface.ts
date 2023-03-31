@@ -1,32 +1,33 @@
 interface IContactRequest {
 	name: string;
-	email: string[];
+	email: string;
 	avatarUrl: string;
-	phone: string[];
+	phone: string;
+	customerId: string;
 }
 
 interface IContactUpdate {
 	name: string;
-	email: string[];
+	email: string;
 	avatarUrl: string;
-	phone: string[];
+	phone: string;
 }
 
 interface IContactResponse {
 	id: string;
 	createdAt: Date;
 	name: string;
-	email: string[];
+	email: string;
 	avatarUrl: string;
-	phone: string[];
+	phone: string;
 }
 
 interface IContactRetrieve {
 	id: string;
 	createdAt: Date;
-	phone: string[];
+	phone: string;
 	name: string;
-	email: string[];
+	email: string;
 	avatarUrl: string;
 }
 
