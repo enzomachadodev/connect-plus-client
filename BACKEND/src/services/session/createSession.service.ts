@@ -21,6 +21,10 @@ const createSessionService = async ({ email, password }: ISessionRequest): Promi
 		throw new AppError("Invalid user or password", 401);
 	}
 
+	if (!user?.isActive) {
+		throw new AppError("User account is disabled", 404);
+	}
+
 	const token = jwt.sign(
 		{
 			isAdm: user.isAdmin,

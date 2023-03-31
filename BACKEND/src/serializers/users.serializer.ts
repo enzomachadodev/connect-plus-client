@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const userRequestSerializer = z.object({
-	email: z.string().email(),
+	email: z.string().email({ message: "Invalid email address" }),
 	name: z.string(),
 	password: z.string(),
-	avatarUrl: z.string(),
+	avatarUrl: z.string().startsWith("https://", { message: "Must provide secure URL" }),
 });
 
 export const userResponseSerializer = z.object({
