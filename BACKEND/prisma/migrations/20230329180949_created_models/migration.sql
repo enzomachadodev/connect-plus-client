@@ -5,7 +5,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "avatarUrl" TEXT NOT NULL DEFAULT 'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
+    "avatarUrl" TEXT NOT NULL,
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
 
@@ -17,9 +17,9 @@ CREATE TABLE "Customer" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
-    "email" TEXT[],
-    "avatarUrl" TEXT NOT NULL DEFAULT 'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
-    "phone" TEXT[],
+    "email" TEXT NOT NULL,
+    "avatarUrl" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
@@ -30,9 +30,9 @@ CREATE TABLE "Contact" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
-    "email" TEXT[],
-    "avatarUrl" TEXT NOT NULL DEFAULT 'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
-    "phone" TEXT[],
+    "email" TEXT NOT NULL,
+    "avatarUrl" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
     "customerId" TEXT NOT NULL,
 
     CONSTRAINT "Contact_pkey" PRIMARY KEY ("id")
@@ -40,18 +40,6 @@ CREATE TABLE "Contact" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Customer_email_key" ON "Customer"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Customer_phone_key" ON "Customer"("phone");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Contact_email_key" ON "Contact"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Contact_phone_key" ON "Contact"("phone");
 
 -- AddForeignKey
 ALTER TABLE "Customer" ADD CONSTRAINT "Customer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
