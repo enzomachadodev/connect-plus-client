@@ -3,6 +3,7 @@ import { createCustomerController } from "../controllers/customers/createCustome
 import { retrieveCustomerController } from "../controllers/customers/retrieveCustomer.controller";
 import { updateCustomerController } from "../controllers/customers/updateCustomer.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware";
+import { ensureCustomerEmailNotExistsMiddleware } from "../middlewares/ensureCustomerEmailNotExists.middleware";
 import { ensureCustomerExistsMiddleware } from "../middlewares/ensureCustomerExists.middleware";
 import { ensureDataIsValidMiddleware } from "../middlewares/ensureDataIsValid.middleware";
 import {
@@ -16,7 +17,7 @@ customerRoutes.post(
 	"",
 	ensureAuthMiddleware,
 	ensureDataIsValidMiddleware(customerRequestSerializer),
-	//ensureCustomerEmailNotExistsMiddleware,
+	ensureCustomerEmailNotExistsMiddleware,
 	createCustomerController
 );
 customerRoutes.get(
@@ -31,7 +32,7 @@ customerRoutes.patch(
 	ensureAuthMiddleware,
 	ensureDataIsValidMiddleware(customerUpdateRequestSerializer),
 	ensureCustomerExistsMiddleware,
-	//ensureCustomerEmailNotExistsMiddleware,
+	ensureCustomerEmailNotExistsMiddleware,
 	updateCustomerController
 );
 customerRoutes.delete("");

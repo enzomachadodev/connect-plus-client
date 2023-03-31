@@ -7,16 +7,27 @@ export const ensureCustomerEmailNotExistsMiddleware = async (
 	res: Response,
 	next: NextFunction
 ) => {
+	const userId = req.userId;
 	const { email } = req.body;
 
-	email.array.forEach(async (e: string) => {
-		const customer = await prisma.customer.findUnique({
-			where: {
-				email: e,
-			},
-		});
-		if (customer) {
-			throw new AppError("This Email already in use", 409);
-		}
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId,
+		},
+		include: {
+			customers: true,
+		},
 	});
+
+	if (!user) {
+		throw new AppError("User not found", 404);
+	}
+
+	const customer = user.customers.find((c) => c.email === email);
+
+	if (customer) {
+		throw new AppError("This email already in use", 409);
+	}
+
+	return next();
 };

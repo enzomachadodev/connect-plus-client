@@ -6,7 +6,7 @@ export const ensureDataIsValidMiddleware =
 		const result = schema.safeParse(req.body);
 
 		if (!result.success) {
-			const formattedError = result.error.format();
+			const formattedError = result.error.issues;
 
 			return res.status(400).json(formattedError);
 		}
