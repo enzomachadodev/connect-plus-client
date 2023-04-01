@@ -7,8 +7,21 @@ export const ensureCustomerEmailNotExistsMiddleware = async (
 	res: Response,
 	next: NextFunction
 ) => {
+	const customerId = req.params.id;
 	const userId = req.userId;
 	const { email } = req.body;
+
+	if (customerId) {
+		const customer = await prisma.customer.findUnique({
+			where: {
+				id: customerId,
+			},
+		});
+
+		if (customer?.email === email && email === "") {
+			return next();
+		}
+	}
 
 	const user = await prisma.user.findUnique({
 		where: {

@@ -10,6 +10,7 @@ import {
 	customerRequestSerializer,
 	customerUpdateRequestSerializer,
 } from "../serializers/customer.serializer";
+import { deleteCustomerController } from "../controllers/customers/deleteCustomer.controller";
 
 export const customerRoutes = Router();
 
@@ -35,4 +36,9 @@ customerRoutes.patch(
 	ensureCustomerEmailNotExistsMiddleware,
 	updateCustomerController
 );
-customerRoutes.delete("");
+customerRoutes.delete(
+	"/:id",
+	ensureAuthMiddleware,
+	ensureCustomerExistsMiddleware,
+	deleteCustomerController
+);
