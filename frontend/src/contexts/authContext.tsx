@@ -1,6 +1,6 @@
 import { api } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import nookies, { destroyCookie } from "nookies";
 import { IUser, IUserRegister } from "@/types/users";
 

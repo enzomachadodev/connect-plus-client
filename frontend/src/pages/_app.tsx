@@ -1,12 +1,10 @@
-import { Providers } from "@/components/Providers";
 import "@/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { Providers } from "@/components/Providers";
 import { useTheme } from "next-themes";
 import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 import { Inter } from "next/font/google";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-roboto" });
 

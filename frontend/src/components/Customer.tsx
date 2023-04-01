@@ -11,7 +11,7 @@ export const Customer = () => {
 
 	return (
 		<div className="h-full w-full md:w-3/5 flex flex-col gap-4">
-			<div className="w-full rounded-xl flex items-center p-2 md:p-4 justify-between border border-gray-100 shadow-md bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
+			<div className="w-full rounded-xl h-24 flex items-center p-2 md:p-4 justify-between border border-gray-100 shadow-md bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
 				<button className="flex items-center  gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200">
 					<FiDownload /> Download report
 				</button>

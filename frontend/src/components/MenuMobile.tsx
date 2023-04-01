@@ -1,11 +1,10 @@
+import { FiMoon, FiSearch, FiSun, FiX } from "react-icons/fi";
 import { AuthContext } from "@/contexts/authContext";
 import { CustomerContext } from "@/contexts/customerContext";
 import { ModalContext } from "@/contexts/modalContext";
-import { useQueryClient } from "@tanstack/react-query";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { FiMoon, FiSearch, FiSun, FiX } from "react-icons/fi";
 import { Loader } from "./Loader";
 
 export const MenuMobile = () => {
@@ -17,8 +16,7 @@ export const MenuMobile = () => {
 		setCustomersList,
 		listLoading,
 	} = useContext(CustomerContext);
-	const { user, isLoading, logoutUser } = useContext(AuthContext);
-	const queryClient = useQueryClient();
+	const { user, logoutUser } = useContext(AuthContext);
 	const router = useRouter();
 	const { setTheme, theme } = useTheme();
 	const [search, setSearch] = useState<string>("");
@@ -65,10 +63,16 @@ export const MenuMobile = () => {
 					</div>
 					<div className="flex items-center gap-4">
 						<button
-							onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-							className="text-2xl h-10 w-10 rounded-full border-2 border-gray-700 dark:border-gray-100 flex items-center justify-center"
+							onClick={() => setTheme("light")}
+							className={`${theme === "light" ? "hidden" : ""} text-2xl`}
 						>
-							{theme === "dark" ? <FiMoon /> : <FiSun />}
+							<FiSun />
+						</button>
+						<button
+							onClick={() => setTheme("dark")}
+							className={`${theme === "dark" ? "hidden" : ""} text-2xl`}
+						>
+							<FiMoon />
 						</button>
 						<button
 							className="py-2 px-4 flex items-center gap-1 rounded-lg bg-gray-100 dark:bg-zinc-800 dark:text-gray-100 dark:border-gray-400 text-gray-700 shadow-md hover:shadow-xl border border-gray-100 transition duration-200"

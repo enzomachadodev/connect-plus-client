@@ -2,6 +2,9 @@ import { AddContact } from "@/components/AddContact";
 import { AddCustomer } from "@/components/AddCustomer";
 import { Customer } from "@/components/Customer";
 import { CustomersList } from "@/components/CustomersList";
+import { DeleteContact } from "@/components/DeleteContact";
+import { DeleteCustomer } from "@/components/DeleteCustomer";
+import { EditContact } from "@/components/EditContact";
 import { EditCustomer } from "@/components/EditCustomer";
 import { MenuMobile } from "@/components/MenuMobile";
 import { Nav } from "@/components/Nav";
@@ -19,7 +22,10 @@ export default function Dashboard() {
 			<MenuMobile />
 			<AddCustomer />
 			<EditCustomer />
+			<DeleteCustomer />
 			<AddContact />
+			<EditContact />
+			<DeleteContact />
 		</div>
 	);
 }

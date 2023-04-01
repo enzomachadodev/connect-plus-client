@@ -1,10 +1,10 @@
+import { FiMoon, FiSun } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { CgMenuGridO } from "react-icons/cg";
 import { useTheme } from "next-themes";
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { ModalContext } from "@/contexts/modalContext";
 import { AuthContext } from "@/contexts/authContext";
-import { FiMoon, FiSun } from "react-icons/fi";
 import logo from "../../public/logo.png";
 import Image from "next/image";
 
@@ -13,11 +13,21 @@ export const Nav = () => {
 	const { setMenuMobile } = useContext(ModalContext);
 	const router = useRouter();
 	const { theme, setTheme } = useTheme();
+	const [color, setColor] = useState(false);
 
 	const handleLogout = () => {
 		logoutUser();
 		router.push("/");
 	};
+	console.log(theme);
+	useEffect(() => {
+		if (color) {
+			setTheme("light");
+		} else {
+			setTheme("dark");
+		}
+	}, [color]);
+
 	return (
 		<div className="p-2 md:p-4 flex items-center justify-center border md:border-0 md:border-b rounded-xl md:rounded-none border-gray-100 bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
 			<div className="container max-w-screen-lg flex justify-between items-center">
@@ -28,10 +38,16 @@ export const Nav = () => {
 
 				<div className="md:flex items-center gap-4 hidden">
 					<button
-						onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-						className="text-2xl "
+						onClick={() => setColor(true)}
+						className={`${color ? "hidden" : ""} text-2xl`}
 					>
-						{theme === "dark" ? <FiMoon /> : <FiSun />}
+						<FiSun />
+					</button>
+					<button
+						onClick={() => setColor(false)}
+						className={`${color ? "" : "hidden"} text-2xl`}
+					>
+						<FiMoon />
 					</button>
 					{!isLoading ? (
 						<div className="flex items-center gap-2">

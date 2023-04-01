@@ -84,7 +84,7 @@ export const AddCustomer = () => {
 				addCustomer ? "" : "hidden"
 			} fixed bg-black/50 w-full h-full z-20 left-0 top-0`}
 		>
-			<div className="absolute w-2/3 md:w-auto top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-8 rounded-xl flex flex-col gap-6 border border-white shadow-lg bg-gray-200 bg-clip-padding backdrop-filter bg-opacity-80">
+			<div className="absolute w-2/3 md:w-auto top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-8 rounded-xl flex flex-col gap-6 border border-white shadow-lg bg-gray-200 bg-clip-padding backdrop-filter bg-opacity-80 dark:bg-zinc-800 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-90 dark:border-gray-400">
 				<div className="flex items-center justify-between w-full">
 					<h2 className="font-bold text-2xl">Add a new customer!</h2>
 					<button onClick={() => setAddCustomer(false)} className="text-3xl">
@@ -138,7 +138,7 @@ export const AddCustomer = () => {
 
 					<button
 						type="submit"
-						className="w-full h-12 rounded-lg bg-gray-100 shadow-md hover:shadow-xl border border-white transition duration-200"
+						className="w-full h-12 rounded-lg bg-gray-100 shadow-md hover:shadow-xl border border-gray-100 transition duration-200 dark:bg-zinc-800 dark:border-gray-400"
 						disabled={isDisabled}
 					>
 						Add Customer

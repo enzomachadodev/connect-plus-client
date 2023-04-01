@@ -29,7 +29,7 @@ export const CustomersList = () => {
 
 	return (
 		<div className="w-full md:w-2/5  h-full overflow-hidden flex-col gap-4 hidden md:flex">
-			<div className="rounded-xl p-4 flex items-center gap-4 border border-gray-100 shadow-md bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
+			<div className="rounded-xl p-4 h-24 flex items-center gap-4 border border-gray-100 shadow-md bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
 				<span className="text-xl">
 					<FiSearch />
 				</span>
@@ -37,7 +37,7 @@ export const CustomersList = () => {
 				<input
 					type="text"
 					onChange={handleInputChange}
-					className="border border-gray-100 dark:border-gray-400 h-11 pl-2 w-full rounded-lg"
+					className="border border-gray-100 dark:border-gray-400 h-10 pl-2 w-full rounded-lg"
 					placeholder="Search customer..."
 				/>
 			</div>

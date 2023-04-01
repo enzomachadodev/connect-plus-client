@@ -2,6 +2,7 @@ import { FiEdit, FiTrash2, FiPlus, FiPhone, FiMail, FiUser, FiCalendar } from "r
 import { ICustomerRetrieve } from "@/types/customers";
 import { useContext } from "react";
 import { ModalContext } from "@/contexts/modalContext";
+import { CustomerContext } from "@/contexts/customerContext";
 
 export const SelectedCustomer = ({
 	avatarUrl,
@@ -11,8 +12,9 @@ export const SelectedCustomer = ({
 	phone,
 	contacts,
 }: ICustomerRetrieve) => {
-	const { setAddContact, setEditCustomer } = useContext(ModalContext);
-
+	const { setAddContact, setEditCustomer, setEditContact, setDeleteContact, setDeleteCustomer } =
+		useContext(ModalContext);
+	const { setSelectedContact } = useContext(CustomerContext);
 	const formatData = (createdAt: Date) => {
 		const date = new Date(createdAt);
 		const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
@@ -56,7 +58,10 @@ export const SelectedCustomer = ({
 				</ul>
 			</div>
 			<div className="w-full flex gap-2 md:gap-4 items-center justify-between">
-				<button className="flex items-center gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200">
+				<button
+					onClick={() => setDeleteCustomer(true)}
+					className="flex items-center gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200"
+				>
 					<FiTrash2 /> Delete
 				</button>
 				<button
@@ -92,10 +97,22 @@ export const SelectedCustomer = ({
 									/>
 								</div>
 								<div className="flex gap-2 mt-2">
-									<button className="border border-gray-100 rounded-lg p-1 flex items-center justify-center">
+									<button
+										onClick={() => {
+											setDeleteContact(true);
+											setSelectedContact(c);
+										}}
+										className="border border-gray-100 rounded-lg p-1 flex items-center justify-center"
+									>
 										<FiTrash2 />
 									</button>
-									<button className="border border-gray-100 rounded-lg p-1 flex items-center justify-center">
+									<button
+										onClick={() => {
+											setEditContact(true);
+											setSelectedContact(c);
+										}}
+										className="border border-gray-100 rounded-lg p-1 flex items-center justify-center"
+									>
 										<FiEdit />
 									</button>
 								</div>

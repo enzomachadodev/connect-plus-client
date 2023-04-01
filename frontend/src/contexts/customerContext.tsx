@@ -1,4 +1,5 @@
 import { api } from "@/services/api";
+import { IContact } from "@/types/contacts";
 import { ICustomer, ICustomerRetrieve } from "@/types/customers";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, SetStateAction, useCallback, useEffect, useState } from "react";
@@ -12,6 +13,8 @@ interface ICustomerContextData {
 	listLoading: boolean;
 	customerRetrieve: ICustomerRetrieve | undefined;
 	retrieveLoading: boolean;
+	selectedContact: IContact | undefined;
+	setSelectedContact: React.Dispatch<SetStateAction<IContact | undefined>>;
 }
 
 interface ICustomerProviderProps {
@@ -23,7 +26,7 @@ export const CustomerContext = createContext({} as ICustomerContextData);
 export const CustomerProvider = ({ children }: ICustomerProviderProps) => {
 	const [currentCustomer, setCurrentCustomer] = useState("");
 	const [customersList, setCustomersList] = useState<ICustomer[]>([]);
-
+	const [selectedContact, setSelectedContact] = useState<IContact | undefined>();
 	const { data: defaultCustomerList, isLoading: listLoading } = useQuery<ICustomer[]>(
 		["customer"],
 		async () => {
@@ -60,6 +63,8 @@ export const CustomerProvider = ({ children }: ICustomerProviderProps) => {
 				setCustomersList,
 				retrieveLoading,
 				customerRetrieve,
+				selectedContact,
+				setSelectedContact,
 			}}
 		>
 			{children}
