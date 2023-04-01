@@ -22,6 +22,7 @@ export const contactUpdateRequestSerializer = z.object({
 	name: z.string().optional(),
 	phone: z.string().optional(),
 	avatarUrl: z.string().optional(),
+	customerId: z.string(),
 });
 
 export const listContactsResponseSerializer = z.array(contactResponseSerializer);

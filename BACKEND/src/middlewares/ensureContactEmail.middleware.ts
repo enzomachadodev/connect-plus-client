@@ -8,6 +8,7 @@ export const ensureContactEmailNotExistsMiddleware = async (
 	next: NextFunction
 ) => {
 	const { email, customerId } = req.body;
+	const id = req.params.id;
 
 	const customer = await prisma.customer.findUnique({
 		where: {
@@ -24,7 +25,7 @@ export const ensureContactEmailNotExistsMiddleware = async (
 
 	const contact = customer?.contacts.find((c) => c.email == email);
 
-	if (contact) {
+	if (contact?.id !== id) {
 		throw new AppError("This Email already in use", 409);
 	}
 

@@ -9,6 +9,7 @@ import {
 	contactRequestSerializer,
 	contactUpdateRequestSerializer,
 } from "../serializers/contacts.serializer";
+import { deleteContactController } from "../controllers/contacts/deleteContact.controller";
 
 export const contactsRoutes = Router();
 
@@ -21,10 +22,17 @@ contactsRoutes.post(
 );
 
 contactsRoutes.patch(
-	"",
+	"/:id",
 	ensureAuthMiddleware,
 	ensureDataIsValidMiddleware(contactUpdateRequestSerializer),
 	ensureContactsExistsMiddleware,
 	ensureContactEmailNotExistsMiddleware,
 	updateContactController
+);
+
+contactsRoutes.delete(
+	"/:id",
+	ensureAuthMiddleware,
+	ensureContactsExistsMiddleware,
+	deleteContactController
 );
