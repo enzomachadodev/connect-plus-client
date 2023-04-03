@@ -25,7 +25,6 @@ export const MenuMobile = () => {
 		setSearch(e.target.value);
 
 		if (search === "") {
-			console.log(defaultCustomerList);
 			setCustomersList(defaultCustomerList!.reverse());
 		} else {
 			setCustomersList(

@@ -18,7 +18,6 @@ export const CustomersList = () => {
 		if (event.target.value === "") {
 			setCustomersList(defaultCustomerList!);
 		} else {
-			console.log(event.target.value);
 			setCustomersList(
 				defaultCustomerList!.filter((e) =>
 					e.name.toLowerCase().includes(event.target.value.toLowerCase())

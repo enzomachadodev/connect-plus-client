@@ -19,7 +19,6 @@ export const Nav = () => {
 		logoutUser();
 		router.push("/");
 	};
-	console.log(theme);
 	useEffect(() => {
 		if (color) {
 			setTheme("light");

@@ -4,15 +4,58 @@ import { CustomerContext } from "@/contexts/customerContext";
 import { ModalContext } from "@/contexts/modalContext";
 import { Loader } from "./Loader";
 import { FiDownload, FiPlus } from "react-icons/fi";
+import { useState } from "react";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import { toast } from "react-toastify";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export const Customer = () => {
-	const { retrieveLoading, customerRetrieve } = useContext(CustomerContext);
+	const { retrieveLoading, customerRetrieve, currentCustomer } = useContext(CustomerContext);
 	const { setAddCustomer } = useContext(ModalContext);
+	const [url, setUrl] = useState<string>("");
+
+	const dd = {
+		content: [
+			{ text: "Customer Report\n", style: "header" },
+			{
+				ul: [
+					`Name: ${customerRetrieve?.name}`,
+					`Email: ${customerRetrieve?.email}`,
+					`Phone: ${customerRetrieve?.phone}`,
+				],
+			},
+			{ text: "\n\n Customer Contacts:\n", style: "header" },
+			{
+				ul: [
+					`${customerRetrieve?.contacts.map(
+						(c) => `Name: ${c.name}, Email: ${c.email}, Phone: ${c.phone}`
+					)}`,
+				],
+			},
+		],
+	};
+
+	const handleDownload = async () => {
+		if (customerRetrieve) {
+			const pdfGenerator = pdfMake.createPdf(dd);
+			pdfGenerator.getBlob((blob) => {
+				const url = URL.createObjectURL(blob);
+				setUrl(url);
+			});
+			pdfGenerator.download();
+		} else {
+			toast.error("Please, select a customer!");
+		}
+	};
 
 	return (
 		<div className="h-full w-full md:w-3/5 flex flex-col gap-4">
 			<div className="w-full rounded-xl h-24 flex items-center p-2 md:p-4 justify-between border border-gray-100 shadow-md bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
-				<button className="flex items-center  gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200">
+				<button
+					onClick={handleDownload}
+					className="flex items-center  gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200"
+				>
 					<FiDownload /> Download report
 				</button>
 				<button
