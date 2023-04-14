@@ -1,4 +1,4 @@
-# FullStack_Challenge
+# Connect Plus
 
 <h1 align="center">
    <img src="./frontend/public/logo.png" alt="logo" /> 
