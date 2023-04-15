@@ -16,7 +16,7 @@
 	"author": "Enzo Machado",
 	"license": "ISC",
 	"dependencies": {
-		"@prisma/client": "^4.11.0",
+		"@prisma/client": "^4.12.0",
 		"bcrypt": "^5.1.0",
 		"cors": "^2.8.5",
 		"cross-env": "^7.0.3",
