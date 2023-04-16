@@ -16,7 +16,6 @@ specifiers:
   jsonwebtoken: ^9.0.0
   node: ^19.8.1
   prisma: ^4.12.0
-  reflect-metadata: ^0.1.13
   ts-node: ^10.9.1
   ts-node-dev: ^2.0.0
   tsup: ^6.7.0
@@ -33,7 +32,6 @@ dependencies:
   express-async-errors: 3.1.1_express@4.18.2
   jsonwebtoken: 9.0.0
   node: 19.8.1
-  reflect-metadata: 0.1.13
   ts-node: 10.9.1_zlbzrxdj56n2qhafx752nt3nlm
   zod: 3.21.4
 
@@ -1463,10 +1461,6 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
-
-  /reflect-metadata/0.1.13:
-    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
-    dev: false
 
   /resolve-from/5.0.0:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
