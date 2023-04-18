@@ -7,12 +7,9 @@
 		"node": "18"
 	},
 	"scripts": {
+		"dev": "tsx src/index.ts",
 		"start": "node dist/index.js",
-		"build": "tsc",
-		"clean": "rm -rf dist",
-		"predeploy": "npm run build",
-		"deploy": "npm run clean && npm run build && scp -r dist/ user@host:/path/to/app",
-		"postdeploy": "npm run clean"
+		"build": "tsup src"
 	},
 	"keywords": [],
 	"author": "Enzo Machado",
