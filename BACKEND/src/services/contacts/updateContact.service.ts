@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 import {
 	IContactResponse,
 	IContactRetrieve,

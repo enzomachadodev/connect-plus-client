@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 import { IUserResponse } from "../../interfaces/users.interface";
 import { userResponseSerializer } from "../../serializers/users.serializer";
 

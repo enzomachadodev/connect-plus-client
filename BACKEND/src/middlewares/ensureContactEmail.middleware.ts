@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../../prisma/seed";
+import prisma from "../prismadb";
 import { AppError } from "../errors/appError";
 
 export const ensureContactEmailNotExistsMiddleware = async (

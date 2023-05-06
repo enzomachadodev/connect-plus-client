@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 import { ICustomerResponse } from "../../interfaces/customers.interface";
 import { listCustomersResponseSerializer } from "../../serializers/customer.serializer";
 

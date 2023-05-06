@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 
 export const deleteContactService = async (contactId: string) => {
 	await prisma.contact.delete({

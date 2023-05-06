@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 import { AppError } from "../../errors/appError";
 import { ISessionRequest } from "../../interfaces/session.interface";
 
