@@ -1,5 +1,5 @@
-import { prisma } from "../../../prisma/seed";
 import { IContactRequest, IContactResponse } from "../../interfaces/contacts.interface";
+import prisma from "../../prismadb";
 import { contactResponseSerializer } from "../../serializers/contacts.serializer";
 
 export const createContactService = async ({

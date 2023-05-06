@@ -1,5 +1,5 @@
 import { Customer } from "@prisma/client";
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 import { ICustomerResponse } from "../../interfaces/customers.interface";
 import { customerResponseSerializer } from "../../serializers/customer.serializer";
 

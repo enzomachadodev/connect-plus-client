@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 import { IUserRequest, IUserResponse } from "../../interfaces/users.interface";
 import { userResponseSerializer } from "../../serializers/users.serializer";
 

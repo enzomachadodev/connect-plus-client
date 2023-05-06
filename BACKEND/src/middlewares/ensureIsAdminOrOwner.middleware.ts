@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/appError";
-import { prisma } from "../../prisma/seed";
+import prisma from "../prismadb";
 
 export const ensureAdminOrOwnerMiddleware = async (
 	req: Request,

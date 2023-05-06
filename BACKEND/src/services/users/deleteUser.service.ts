@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/seed";
+import prisma from "../../prismadb";
 
 export const deleteUserService = async (userId: string) => {
 	await prisma.user.update({

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../../prisma/seed";
+
 import { AppError } from "../errors/appError";
+import prisma from "../prismadb";
 
 export const ensureContactsExistsMiddleware = async (
 	req: Request,
