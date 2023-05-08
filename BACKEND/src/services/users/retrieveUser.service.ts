@@ -1,8 +1,7 @@
 import prisma from "../../prismadb";
-import { IUserResponse } from "../../interfaces/users.interface";
-import { userResponseSerializer } from "../../serializers/users.serializer";
+import { UserResponse, userResponseSerializer } from "../../serializers/users.serializer";
 
-export const retrieveUserService = async (userId: string): Promise<IUserResponse> => {
+export const retrieveUserService = async (userId: string): Promise<UserResponse> => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId,

@@ -8,7 +8,7 @@ export const ensureCustomerEmailNotExistsMiddleware = async (
 	next: NextFunction
 ) => {
 	const customerId = req.params.id;
-	const userId = req.userId;
+	const userId = req.user.id;
 	const { email } = req.body;
 
 	if (customerId) {
@@ -18,7 +18,7 @@ export const ensureCustomerEmailNotExistsMiddleware = async (
 			},
 		});
 
-		if (customer?.email === email && email === "") {
+		if (customer?.email.includes(email)) {
 			return next();
 		}
 	}
@@ -33,13 +33,13 @@ export const ensureCustomerEmailNotExistsMiddleware = async (
 	});
 
 	if (!user) {
-		throw new AppError("User not found", 404);
+		throw new AppError("Usuário não encontrado", 404);
 	}
 
-	const customer = user.customers.find((c) => c.email === email);
+	const customer = user.customers.find((c) => c.email.includes(email));
 
 	if (customer) {
-		throw new AppError("This email already in use", 409);
+		throw new AppError("Você já possui um cliente com esse email", 409);
 	}
 
 	return next();

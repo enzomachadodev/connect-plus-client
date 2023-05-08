@@ -20,13 +20,13 @@ export const ensureContactEmailNotExistsMiddleware = async (
 	});
 
 	if (!customer) {
-		throw new AppError("Customer not found", 404);
+		throw new AppError("Cliente não encontrado", 404);
 	}
 
-	const contact = customer?.contacts.find((c) => c.email == email);
+	const contact = customer?.contacts.find((c) => c.email.includes(email));
 
 	if (contact?.id !== id) {
-		throw new AppError("This Email already in use", 409);
+		throw new AppError("Você já possui um contato com esse email", 409);
 	}
 
 	return next();

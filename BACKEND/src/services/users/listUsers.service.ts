@@ -1,9 +1,12 @@
 import prisma from "../../prismadb";
-import { IUserRequest, IUserResponse } from "../../interfaces/users.interface";
-import { listUsersResponseSerializer } from "../../serializers/users.serializer";
+import { UserResponse, listUsersResponseSerializer } from "../../serializers/users.serializer";
 
-export const listUsersService = async (): Promise<IUserResponse[]> => {
-	const users = await prisma.user.findMany();
+export const listUsersService = async (): Promise<UserResponse[]> => {
+	const users = await prisma.user.findMany({
+		where: {
+			isActive: true,
+		},
+	});
 
 	const validatedData = listUsersResponseSerializer.parse(users);
 

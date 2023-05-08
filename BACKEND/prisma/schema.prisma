@@ -23,9 +23,9 @@ model Customer {
   id        String    @id @default(uuid())
   createdAt DateTime  @default(now())
   name      String
-  email     String
+  email     String[]
   avatarUrl String
-  phone     String
+  phone     String[]
   userId    String
   contacts  Contact[]
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -35,9 +35,9 @@ model Contact {
   id         String   @id @default(uuid())
   createdAt  DateTime @default(now())
   name       String
-  email      String
+  email      String[]
   avatarUrl  String
-  phone      String
+  phone      String[]
   customerId String
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 }

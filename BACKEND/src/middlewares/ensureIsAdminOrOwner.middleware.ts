@@ -9,7 +9,7 @@ export const ensureAdminOrOwnerMiddleware = async (
 ) => {
 	const user = await prisma.user.findUnique({
 		where: {
-			id: req.userId,
+			id: req.user.id,
 		},
 	});
 

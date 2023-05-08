@@ -6,7 +6,7 @@ import { ensureContactEmailNotExistsMiddleware } from "../middlewares/ensureCont
 import { ensureContactsExistsMiddleware } from "../middlewares/ensureContactExists.middleware";
 import { ensureDataIsValidMiddleware } from "../middlewares/ensureDataIsValid.middleware";
 import {
-	contactRequestSerializer,
+	contactCreateRequestSerializer,
 	contactUpdateRequestSerializer,
 } from "../serializers/contacts.serializer";
 import { deleteContactController } from "../controllers/contacts/deleteContact.controller";
@@ -16,7 +16,7 @@ export const contactsRoutes = Router();
 contactsRoutes.post(
 	"",
 	ensureAuthMiddleware,
-	ensureDataIsValidMiddleware(contactRequestSerializer),
+	ensureDataIsValidMiddleware(contactCreateRequestSerializer),
 	ensureContactEmailNotExistsMiddleware,
 	createContactController
 );

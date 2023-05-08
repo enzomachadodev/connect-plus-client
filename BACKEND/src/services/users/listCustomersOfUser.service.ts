@@ -1,8 +1,10 @@
 import prisma from "../../prismadb";
-import { ICustomerResponse } from "../../interfaces/customers.interface";
-import { listCustomersResponseSerializer } from "../../serializers/customer.serializer";
+import {
+	CustomerResponse,
+	listCustomersResponseSerializer,
+} from "../../serializers/customer.serializer";
 
-export const listCustomersOfUserService = async (userId: string): Promise<ICustomerResponse[]> => {
+export const listCustomersOfUserService = async (userId: string): Promise<CustomerResponse[]> => {
 	const customersOfUser = await prisma.customer.findMany({
 		where: {
 			userId: userId,

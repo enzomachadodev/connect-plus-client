@@ -2,9 +2,13 @@ import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../../prismadb";
 import { AppError } from "../../errors/appError";
-import { ISessionRequest } from "../../interfaces/session.interface";
+import { SessionRequest } from "../../serializers/session.serializer";
+import "dotenv/config";
 
-const createSessionService = async ({ email, password }: ISessionRequest): Promise<string> => {
+export const createSessionService = async ({
+	email,
+	password,
+}: SessionRequest): Promise<string> => {
 	const user = await prisma.user.findUnique({
 		where: {
 			email: email,
@@ -12,17 +16,17 @@ const createSessionService = async ({ email, password }: ISessionRequest): Promi
 	});
 
 	if (!user) {
-		throw new AppError("Invalid user or password", 401);
+		throw new AppError("Usuário e/ou senha inválidos", 401);
 	}
 
 	const passwordMatch = await compare(password, user.password);
 
 	if (!passwordMatch) {
-		throw new AppError("Invalid user or password", 401);
+		throw new AppError("Usuário e/ou senha inválidos", 401);
 	}
 
 	if (!user?.isActive) {
-		throw new AppError("User account is disabled", 404);
+		throw new AppError("Usuário desativado", 404);
 	}
 
 	const token = jwt.sign(
@@ -38,5 +42,3 @@ const createSessionService = async ({ email, password }: ISessionRequest): Promi
 
 	return token;
 };
-
-export { createSessionService };

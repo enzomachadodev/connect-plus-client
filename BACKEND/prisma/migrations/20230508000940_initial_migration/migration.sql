@@ -17,9 +17,9 @@ CREATE TABLE "Customer" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "email" TEXT[],
     "avatarUrl" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
+    "phone" TEXT[],
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
@@ -30,9 +30,9 @@ CREATE TABLE "Contact" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "email" TEXT[],
     "avatarUrl" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
+    "phone" TEXT[],
     "customerId" TEXT NOT NULL,
 
     CONSTRAINT "Contact_pkey" PRIMARY KEY ("id")

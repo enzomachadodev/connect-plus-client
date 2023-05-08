@@ -7,6 +7,7 @@ export const ensureEmailNotExistsMiddleware = async (
 	res: Response,
 	next: NextFunction
 ) => {
+	const { id } = req.params;
 	const { email } = req.body;
 
 	if (email) {
@@ -15,10 +16,12 @@ export const ensureEmailNotExistsMiddleware = async (
 				email: email,
 			},
 		});
+
 		if (user) {
-			throw new AppError("This Email already in use", 409);
+			if (user.id == id) {
+				return next();
+			}
+			throw new AppError("Este email já está sendo usado", 409);
 		}
 	}
-
-	return next();
 };

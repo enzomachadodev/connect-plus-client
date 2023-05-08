@@ -1,14 +1,17 @@
 import { hash } from "bcrypt";
 import prisma from "../../prismadb";
-import { IUserRequest, IUserResponse } from "../../interfaces/users.interface";
-import { userResponseSerializer } from "../../serializers/users.serializer";
+import {
+	UserCreateRequest,
+	UserResponse,
+	userResponseSerializer,
+} from "../../serializers/users.serializer";
 
 export const createUserService = async ({
 	name,
 	email,
 	password,
 	avatarUrl,
-}: IUserRequest): Promise<IUserResponse> => {
+}: UserCreateRequest): Promise<UserResponse> => {
 	const hashPassword = await hash(password, 10);
 
 	const newUser = await prisma.user.create({
@@ -16,7 +19,9 @@ export const createUserService = async ({
 			name,
 			email,
 			password: hashPassword,
-			avatarUrl,
+			avatarUrl: avatarUrl
+				? avatarUrl
+				: "https://github.com/m4chado/NodeBooker/blob/main/my-app/public/images/user.jpg?raw=true",
 		},
 	});
 

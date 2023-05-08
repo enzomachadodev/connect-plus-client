@@ -16,7 +16,7 @@ export const ensureContactsExistsMiddleware = async (
 		},
 	});
 	if (!contact) {
-		throw new AppError("contact not found", 404);
+		throw new AppError("Contato não encontrado", 404);
 	}
 
 	req.contact = contact;
