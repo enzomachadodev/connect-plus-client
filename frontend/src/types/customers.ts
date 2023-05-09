@@ -1,27 +1,25 @@
-import { IContact } from "./contacts";
+import { Contact } from "./contacts";
 
-export interface ICustomer {
+export interface Customer {
 	id: string;
-	createdAt: Date;
-	phone: string;
 	name: string;
 	email: string;
+	phone: string;
 	avatarUrl: string;
+	createdAt: Date;
+	contacts?: Contact[];
 }
 
-export interface ICustomerRetrieve {
-	id: string;
-	createdAt: Date;
-	phone: string;
+export interface CustomerCreateRequest {
 	name: string;
 	email: string;
-	avatarUrl: string;
-	contacts: IContact[];
+	phone: string;
+	avatarUrl?: string;
 }
 
-export interface ICustomerRequest {
-	name: string;
-	avatarUrl: string;
-	email: string;
-	phone: string;
+export interface CustomerUpdateRequest {
+	name?: string;
+	email?: string;
+	phone?: string;
+	avatarUrl?: string;
 }

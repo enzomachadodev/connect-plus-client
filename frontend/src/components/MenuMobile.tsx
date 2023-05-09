@@ -9,14 +9,9 @@ import { Loader } from "./Loader";
 
 export const MenuMobile = () => {
 	const { menuMobile, setMenuMobile } = useContext(ModalContext);
-	const {
-		setCurrentCustomer,
-		customersList,
-		defaultCustomerList,
-		setCustomersList,
-		listLoading,
-	} = useContext(CustomerContext);
-	const { user, logoutUser } = useContext(AuthContext);
+	const { setCurrentCustomer, customersList, customersListSave, setCustomersList } =
+		useContext(CustomerContext);
+	const { currentUser } = useContext(AuthContext);
 	const router = useRouter();
 	const { setTheme, theme } = useTheme();
 	const [search, setSearch] = useState<string>("");
@@ -25,10 +20,10 @@ export const MenuMobile = () => {
 		setSearch(e.target.value);
 
 		if (search === "") {
-			setCustomersList(defaultCustomerList!.reverse());
+			setCustomersList(customersListSave!.reverse());
 		} else {
 			setCustomersList(
-				defaultCustomerList!.filter((e) =>
+				customersListSave!.filter((e) =>
 					e.name.toLowerCase().includes(search.toLowerCase())
 				)
 			);
@@ -36,7 +31,7 @@ export const MenuMobile = () => {
 	};
 
 	const handleLogout = () => {
-		logoutUser();
+		//logoutUser();
 		router.push("/");
 	};
 	return (
@@ -54,11 +49,11 @@ export const MenuMobile = () => {
 						<div className="h-10 w-10 rounded-full overflow-hidden border border-gray-100 dark:border-gray-400 p-1">
 							<img
 								className="h-full w-full rounded-full"
-								src={user?.avatarUrl}
+								src={currentUser?.avatarUrl}
 								alt=""
 							/>
 						</div>
-						<h2 className="">{user?.name}</h2>
+						<h2 className="">{currentUser?.name}</h2>
 					</div>
 					<div className="flex items-center gap-4">
 						<button

@@ -1,39 +1,70 @@
 import { AddContact } from "@/components/AddContact";
-import { AddCustomer } from "@/components/AddCustomer";
-import { Customer } from "@/components/Customer";
+import { AddCustomer } from "@/components/modals/AddCustomer";
+import { CurrentCustomer } from "@/components/CurrentCustomer.tsx";
 import { CustomersList } from "@/components/CustomersList";
 import { DeleteContact } from "@/components/DeleteContact";
 import { DeleteCustomer } from "@/components/DeleteCustomer";
 import { EditContact } from "@/components/EditContact";
-import { EditCustomer } from "@/components/EditCustomer";
+import { EditCustomer } from "@/components/modals/EditCustomer";
 import { MenuMobile } from "@/components/MenuMobile";
-import { Nav } from "@/components/Nav";
-import { GetServerSideProps } from "next";
-import nookies from "nookies";
+import { NavBar } from "@/components/header/NavBar";
 
-export default function Dashboard() {
+import { api } from "@/services/api";
+import { Customer } from "@/types/customers";
+import { destroyCookie, parseCookies } from "nookies";
+
+interface DashboardProps {
+	customers: Customer[] | null;
+}
+
+export default function Dashboard({ customers }: DashboardProps) {
 	return (
-		<div className="w-full h-screen bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-0 p-2 md:p-0">
-			<Nav />
-			<div className="container max-w-screen-lg mx-auto my-4 md:flex md:flex-row flex-col justify-between items-center h-5/6 gap-4">
-				<Customer />
-				<CustomersList />
+		<div className="w-full h-full border overflow-hidden">
+			<NavBar />
+			<div className="container p-4 max-w-screen-xl mx-auto md:flex md:flex-row flex-col justify-between items-center md:items-start gap-4">
+				<CurrentCustomer />
+				<CustomersList customers={customers} />
 			</div>
-			<MenuMobile />
+			{/* <MenuMobile /> */}
 			<AddCustomer />
-			<EditCustomer />
+			{/*<EditCustomer />
 			<DeleteCustomer />
 			<AddContact />
 			<EditContact />
-			<DeleteContact />
+			<DeleteContact /> */}
 		</div>
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const cookies = nookies.get(ctx);
+export async function getServerSideProps(ctx: any) {
+	let customers = null;
 
-	if (!cookies["token"]) {
+	try {
+		const { "connectplus.token": token } = parseCookies(ctx);
+
+		console.log(token, "@@@@@@@");
+
+		if (!token) {
+			return {
+				redirect: {
+					destination: "/",
+					permanent: false,
+				},
+			};
+		}
+		api.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+		const { data } = await api.get("/users");
+		if (!data) {
+			return {
+				redirect: {
+					destination: "/",
+					permanent: false,
+				},
+			};
+		}
+	} catch (err) {
+		destroyCookie(ctx, "nodebooker.token");
 		return {
 			redirect: {
 				destination: "/",
@@ -41,7 +72,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			},
 		};
 	}
+
+	try {
+		const { data } = await api.get("/users/customers");
+
+		customers = data;
+	} catch (err) {
+		console.log(err);
+	}
+
 	return {
-		props: { name: cookies["token"] },
+		props: {
+			customers,
+		},
 	};
-};
+}

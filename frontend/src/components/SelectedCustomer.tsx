@@ -1,155 +1,90 @@
-import { FiEdit, FiTrash2, FiPlus, FiPhone, FiMail, FiUser, FiCalendar } from "react-icons/fi";
-import { ICustomerRetrieve } from "@/types/customers";
+import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
+
 import { useContext } from "react";
+
 import { ModalContext } from "@/contexts/modalContext";
 import { CustomerContext } from "@/contexts/customerContext";
+import { Customer } from "@/types/customers";
+import ContactCard from "./ContactCard";
+import OutlineButton from "./buttons/OutlineButton";
+import SolidButton from "./buttons/SolidButton";
+import CustomerCard from "./CustomerCard";
 
 export const SelectedCustomer = ({
+	id,
 	avatarUrl,
 	createdAt,
 	email,
 	name,
 	phone,
 	contacts,
-}: ICustomerRetrieve) => {
+}: Customer) => {
 	const { setAddContact, setEditCustomer, setEditContact, setDeleteContact, setDeleteCustomer } =
 		useContext(ModalContext);
-	const { setSelectedContact } = useContext(CustomerContext);
+
 	const formatData = (createdAt: Date) => {
 		const date = new Date(createdAt);
 		const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-
 		return `Added in ${formattedDate}`;
 	};
 
 	return (
 		<>
-			<div className="w-full gap-4  rounded-xl flex items-center p-2 md:p-4 shadow-md border border-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
-				<img
-					src={avatarUrl}
-					alt=""
-					className="border border-gray-100 h-28 w-28 rounded-full p-1"
-				/>
-				<ul>
-					<li className="flex flex-row items-center gap-2 flex-nowrap overflow-hidden text-ellipsis">
-						<span>
-							<FiCalendar />
-						</span>
-						<h3>{formatData(createdAt)}</h3>
-					</li>
-					<li className="flex flex-row items-center gap-2 flex-nowrap overflow-hidden text-ellipsis">
-						<span>
-							<FiUser />
-						</span>
-						<h3>{name}</h3>
-					</li>
-					<li className="flex flex-row items-center gap-2 flex-nowrap overflow-hidden text-ellipsis">
-						<span>
-							<FiPhone />
-						</span>
-						{phone}
-					</li>
-					<li className="flex flex-row items-center gap-2 flex-nowrap overflow-hidden text-ellipsis">
-						<span>
-							<FiMail />
-						</span>
-						{email}
-					</li>
-				</ul>
-			</div>
+			<CustomerCard
+				avatarUrl={avatarUrl}
+				createdAt={formatData(createdAt)}
+				email={email}
+				name={name}
+				phone={phone}
+			/>
 			<div className="w-full flex gap-2 md:gap-4 items-center justify-between">
-				<button
-					onClick={() => setDeleteCustomer(true)}
-					className="flex items-center gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200"
-				>
-					<FiTrash2 /> Delete
-				</button>
-				<button
-					onClick={() => setEditCustomer(true)}
-					className="flex items-center gap-1 md:gap-2 py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-md border border-gray-100 dark:border-gray-400 bg-clip-padding backdrop-filter bg-opacity-50 hover:shadow-xl transition duration-200"
-				>
-					<FiEdit /> Edit
-				</button>
-				<button
+				<OutlineButton
+					classname="!py-2 !px-4 text-base"
+					label="Excluir"
+					Icon={FiTrash2}
+					onClick={() => setDeleteCustomer(id)}
+					iconSize={20}
+				/>
+
+				<OutlineButton
+					classname="!py-2 !px-4 text-base"
+					label="Editar"
+					Icon={FiEdit}
+					onClick={() =>
+						setEditCustomer({ id, avatarUrl, createdAt, email, name, phone })
+					}
+					iconSize={20}
+				/>
+
+				<SolidButton
+					classname="!h-[42px] !px-4 text-base"
+					label="Contato"
+					Icon={FiPlus}
 					onClick={() => setAddContact(true)}
-					className="py-1 px-2 md:py-2 md:px-4 flex items-center gap-1 md:gap-2 rounded-lg bg-gray-100 dark:bg-zinc-800 dark:text-gray-100 dark:border-gray-400 text-gray-700 shadow-md hover:shadow-xl border border-gray-100 transition duration-200"
-				>
-					<span className="text-xl">
-						<FiPlus />
-					</span>
-					Add contact
-				</button>
+					iconSize={20}
+				/>
 			</div>
 
-			<ul className="h-2/3  p-2 md:p-4 rounded-xl w-full overflow-y-auto overflow-x-hidden flex flex-col flex-nowrap gap-2 md:gap-4 shadow-md border border-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50 dark:border-gray-400">
+			<hr className="border-white" />
+
+			<ul className="h-2/3 w-full overflow-y-auto overflow-x-hidden flex flex-col flex-nowrap gap-4">
 				{contacts?.length ? (
 					contacts.map((c) => (
-						<li
+						<ContactCard
 							key={c.id}
-							className="w-full border border-gray-100 dark:border-gray-400 rounded-xl p-2 md:p-4 gap-2 md:gap-4 flex items-center"
-						>
-							<div className="flex flex-col items-center">
-								<div className="h-16 w-16">
-									<img
-										src={c.avatarUrl}
-										alt=""
-										className="h-full rounded-full w-full"
-									/>
-								</div>
-								<div className="flex gap-2 mt-2">
-									<button
-										onClick={() => {
-											setDeleteContact(true);
-											setSelectedContact(c);
-										}}
-										className="border border-gray-100 rounded-lg p-1 flex items-center justify-center"
-									>
-										<FiTrash2 />
-									</button>
-									<button
-										onClick={() => {
-											setEditContact(true);
-											setSelectedContact(c);
-										}}
-										className="border border-gray-100 rounded-lg p-1 flex items-center justify-center"
-									>
-										<FiEdit />
-									</button>
-								</div>
-							</div>
-
-							<ul className="w-full flex flex-col items-start justify-center">
-								<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
-									<span>
-										<FiCalendar />
-									</span>
-									<h3>{formatData(c.createdAt)}</h3>
-								</li>
-								<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
-									<span>
-										<FiUser />
-									</span>
-									<h3>{c.name}</h3>
-								</li>
-								<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
-									<span>
-										<FiPhone />
-									</span>
-									{c.phone}
-								</li>
-								<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
-									<span>
-										<FiMail />
-									</span>
-									{c.email}
-								</li>
-							</ul>
-						</li>
+							avatarUrl={c.avatarUrl}
+							name={c.name}
+							email={c.email}
+							phone={c.phone}
+							createdAt={formatData(c.createdAt)}
+							onDelete={() => setDeleteContact(c.id)}
+							onEdit={() => setEditContact(c)}
+						/>
 					))
 				) : (
 					<div>
 						<h2 className="text-2xl font-semibold">
-							This customer does not yet have any contact associated.
+							Este cliente ainda não possui nenhum contato associado.
 						</h2>
 					</div>
 				)}

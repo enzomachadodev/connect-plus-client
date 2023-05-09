@@ -1,19 +1,21 @@
+import { Contact } from "@/types/contacts";
+import { Customer } from "@/types/customers";
 import { createContext, SetStateAction, useState } from "react";
 
 interface IModalContextData {
 	addCustomer: boolean;
 	setAddCustomer: React.Dispatch<SetStateAction<boolean>>;
-	editCustomer: boolean;
-	setEditCustomer: React.Dispatch<SetStateAction<boolean>>;
-	deleteCustomer: boolean;
-	setDeleteCustomer: React.Dispatch<SetStateAction<boolean>>;
+	editCustomer: Customer | null;
+	setEditCustomer: React.Dispatch<SetStateAction<Customer | null>>;
+	deleteCustomer: string;
+	setDeleteCustomer: React.Dispatch<SetStateAction<string>>;
 
 	addContact: boolean;
 	setAddContact: React.Dispatch<SetStateAction<boolean>>;
-	editContact: boolean;
-	setEditContact: React.Dispatch<SetStateAction<boolean>>;
-	deleteContact: boolean;
-	setDeleteContact: React.Dispatch<SetStateAction<boolean>>;
+	editContact: Contact | null;
+	setEditContact: React.Dispatch<SetStateAction<Contact | null>>;
+	deleteContact: string;
+	setDeleteContact: React.Dispatch<SetStateAction<string>>;
 
 	menuMobile: boolean;
 	setMenuMobile: React.Dispatch<SetStateAction<boolean>>;
@@ -28,8 +30,8 @@ export const ModalContext = createContext({} as IModalContextData);
 export const ModalProvider = ({ children }: IModalProviderProps) => {
 	const [menuMobile, setMenuMobile] = useState(false);
 	const [addCustomer, setAddCustomer] = useState(false);
-	const [editCustomer, setEditCustomer] = useState(false);
-	const [deleteCustomer, setDeleteCustomer] = useState(false);
+	const [editCustomer, setEditCustomer] = useState<Customer | null>(null);
+	const [deleteCustomer, setDeleteCustomer] = useState<string>("");
 	const [addContact, setAddContact] = useState(false);
 	const [editContact, setEditContact] = useState(false);
 	const [deleteContact, setDeleteContact] = useState(false);
