@@ -4,7 +4,7 @@ export const userCreateRequestSerializer = z.object({
 	email: z.string().email({ message: "Formato de email inválido" }),
 	name: z.string(),
 	password: z.string(),
-	avatarUrl: z.string().startsWith("https://", { message: "Use uma URL segura" }).optional(),
+	avatarUrl: z.string().optional(),
 });
 
 export type UserCreateRequest = z.infer<typeof userCreateRequestSerializer>;

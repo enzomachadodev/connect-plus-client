@@ -5,11 +5,7 @@ export const customerCreateRequestSerializer = z.object({
 	email: z.string().email({ message: "Formato de email inválido" }),
 	name: z.string(),
 	phone: z.string(),
-	avatarUrl: z
-		.string()
-		.url()
-		.startsWith("https://", { message: "Use uma URL segura" })
-		.optional(),
+	avatarUrl: z.string().optional(),
 });
 
 export type CustomerCreateRequest = z.infer<typeof customerCreateRequestSerializer>;

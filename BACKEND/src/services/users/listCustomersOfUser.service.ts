@@ -9,6 +9,9 @@ export const listCustomersOfUserService = async (userId: string): Promise<Custom
 		where: {
 			userId: userId,
 		},
+		orderBy: {
+			createdAt: "desc",
+		},
 	});
 
 	const validatedData = listCustomersResponseSerializer.parse(customersOfUser);

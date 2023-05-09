@@ -10,7 +10,11 @@ export const retrieveCustomerService = async (customerId: string): Promise<Custo
 			id: customerId,
 		},
 		include: {
-			contacts: true,
+			contacts: {
+				orderBy: {
+					createdAt: "desc",
+				},
+			},
 		},
 	});
 
