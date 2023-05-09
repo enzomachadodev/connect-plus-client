@@ -21,7 +21,7 @@ export const createUserService = async ({
 			password: hashPassword,
 			avatarUrl: avatarUrl
 				? avatarUrl
-				: "https://github.com/m4chado/NodeBooker/blob/main/my-app/public/images/user.jpg?raw=true",
+				: "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg",
 		},
 	});
 

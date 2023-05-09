@@ -23,7 +23,7 @@ export const ensureContactEmailNotExistsMiddleware = async (
 		throw new AppError("Cliente não encontrado", 404);
 	}
 
-	const contact = customer?.contacts.find((c) => c.email.includes(email));
+	const contact = customer?.contacts.find((c) => c.email === email);
 
 	if (contact?.id !== id) {
 		throw new AppError("Você já possui um contato com esse email", 409);

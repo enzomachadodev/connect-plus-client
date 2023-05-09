@@ -11,6 +11,9 @@ export const createContactService = async (
 	const newContact = await prisma.contact.create({
 		data: {
 			...data,
+			avatarUrl: data.avatarUrl
+				? data.avatarUrl
+				: "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg",
 		},
 	});
 

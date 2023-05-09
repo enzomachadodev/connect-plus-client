@@ -36,7 +36,7 @@ export const ensureCustomerEmailNotExistsMiddleware = async (
 		throw new AppError("Usuário não encontrado", 404);
 	}
 
-	const customer = user.customers.find((c) => c.email.includes(email));
+	const customer = user.customers.find((c) => c.email === email);
 
 	if (customer) {
 		throw new AppError("Você já possui um cliente com esse email", 409);
