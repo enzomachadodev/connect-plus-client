@@ -12,14 +12,11 @@ import { toast } from "react-toastify";
 export const CurrentCustomer = () => {
 	const { retrieveCustomer, customerLoading } = useContext(CustomerContext);
 	const { setAddCustomer } = useContext(ModalContext);
-	const [loadingDownload, setLoadingDownload] = useState(false);
 
 	const handleDownload = async () => {
 		if (retrieveCustomer) {
-			setLoadingDownload(true);
 			await downloadReport(retrieveCustomer).then((res) => {
 				toast.success("Relatorio Pronto");
-				setLoadingDownload(false);
 			});
 		} else {
 			toast.error("Por favor, selecione um cliente.");

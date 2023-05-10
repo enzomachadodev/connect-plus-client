@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { User, UserCreateRequest, UserLoginRequest } from "@/types/users";
 import { UseFormReset } from "react-hook-form";
-import { Router } from "next/router";
 
 interface IAuthContextData {
 	currentUser: User | null;

@@ -1,6 +1,5 @@
 import { ModalProvider } from "@/contexts/modalContext";
 import { CustomerProvider } from "@/contexts/customerContext";
-import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/contexts/authContext";
 import { ContactProvider } from "@/contexts/contactContext";
 

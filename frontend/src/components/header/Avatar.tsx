@@ -1,5 +1,6 @@
 import React from "react";
-import SolidButton from "../buttons/SolidButton";
+import { FiLogOut } from "react-icons/fi";
+import OutlineButton from "../buttons/OutlineButton";
 
 interface AvatarProps {
 	name: string;
@@ -14,7 +15,12 @@ const Avatar = ({ name, avatarUrl, handleLogout }: AvatarProps) => {
 			<div className="aspect-square h-[56px] rounded-full overflow-hidden border border-white p-1">
 				<img className="object-cover h-full w-full rounded-full" src={avatarUrl} alt="" />
 			</div>
-			<SolidButton label="Sair" classname="" onClick={handleLogout} />
+			<OutlineButton
+				label="Sair"
+				Icon={FiLogOut}
+				classname="flex-row-reverse gap-4 "
+				onClick={handleLogout}
+			/>
 		</div>
 	);
 };

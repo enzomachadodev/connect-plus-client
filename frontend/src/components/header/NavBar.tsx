@@ -9,7 +9,6 @@ import Avatar from "./Avatar";
 export const NavBar = () => {
 	const { currentUser, logoutUser } = useContext(AuthContext);
 	const { setMenuMobile } = useContext(ModalContext);
-	const router = useRouter();
 
 	const handleLogout = () => {
 		logoutUser();

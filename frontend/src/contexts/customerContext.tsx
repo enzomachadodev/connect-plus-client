@@ -3,7 +3,6 @@ import { Customer, CustomerCreateRequest, CustomerUpdateRequest } from "@/types/
 import { AxiosError } from "axios";
 
 import { createContext, useEffect, useState } from "react";
-import { UseFormReset } from "react-hook-form";
 import { toast } from "react-toastify";
 
 interface ICustomerContextData {

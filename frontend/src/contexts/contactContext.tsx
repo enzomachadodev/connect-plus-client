@@ -1,7 +1,7 @@
 import { api } from "@/services/api";
 import { ContactCreateRequest, ContactUpdateRequest } from "@/types/contacts";
 import { AxiosError } from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { CustomerContext } from "./customerContext";
 

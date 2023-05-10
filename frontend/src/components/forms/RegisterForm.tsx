@@ -7,7 +7,6 @@ import { AuthContext } from "@/contexts/authContext";
 import DefaultInput from "../inputs/DefaultInput";
 import OutlineButton from "../buttons/OutlineButton";
 import SolidButton from "../buttons/SolidButton";
-import { toast } from "react-toastify";
 
 const registerUserFormSchema = z.object({
 	name: z.string().nonempty("Digite um nome"),
