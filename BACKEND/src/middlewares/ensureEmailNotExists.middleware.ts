@@ -23,5 +23,6 @@ export const ensureEmailNotExistsMiddleware = async (
 			}
 			throw new AppError("Este email já está sendo usado", 409);
 		}
+		return next();
 	}
 };
