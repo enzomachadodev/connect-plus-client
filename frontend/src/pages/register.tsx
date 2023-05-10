@@ -1,20 +1,14 @@
-import { RegisterForm } from "@/components/RegisterForm";
-import Image from "next/image";
-import logo from "../../public/logo.png";
+import Banner from "@/components/Banner";
+import { RegisterForm } from "@/components/forms/RegisterForm";
 
 export default function Register() {
 	return (
-		<div className="w-full h-full flex items-center justify-start bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-0">
-			<div className="w-full h-full py-8 md:w-2/3 max-w-xl flex flex-col justify-start md:justify-center items-center overflow-auto bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50 dark:bg-gray-900 dark:bg-clip-padding dark:backdrop-filter dark:bg-opacity-50">
+		<div className="h-full grid grid-cols-1 md:grid-cols-3 md:gap-8 md:px-8">
+			<div className="flex items-center justify-center col-span-1 p-4 md:p-0">
 				<RegisterForm />
 			</div>
-			<div className="hidden md:flex md:w-full h-full flex-col items-center justify-center">
-				<div className="max-w-lg">
-					<Image src={logo} alt="" className="max-w-lg w-full" />
-					<h3 className="text-xl font-semibold text-gray-100">
-						"Streamline your contacts and never miss a beat with Connect Plus."
-					</h3>
-				</div>
+			<div className=" hidden md:flex col-span-2 items-center justify-center">
+				<Banner />
 			</div>
 		</div>
 	);

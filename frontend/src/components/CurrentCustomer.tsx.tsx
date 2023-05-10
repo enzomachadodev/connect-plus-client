@@ -1,24 +1,42 @@
 import { SelectedCustomer } from "./SelectedCustomer";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CustomerContext } from "@/contexts/customerContext";
 import { ModalContext } from "@/contexts/modalContext";
 import { FiDownload, FiPlus } from "react-icons/fi";
 import SolidButton from "./buttons/SolidButton";
 import OutlineButton from "./buttons/OutlineButton";
+import { Loader } from "./Loader";
+import { downloadReport } from "@/utils/downloadReport";
+import { toast } from "react-toastify";
 
 export const CurrentCustomer = () => {
-	const { retrieveCustomer } = useContext(CustomerContext);
+	const { retrieveCustomer, customerLoading } = useContext(CustomerContext);
 	const { setAddCustomer } = useContext(ModalContext);
+	const [loadingDownload, setLoadingDownload] = useState(false);
+
+	const handleDownload = async () => {
+		if (retrieveCustomer) {
+			setLoadingDownload(true);
+			await downloadReport(retrieveCustomer).then((res) => {
+				toast.success("Relatorio Pronto");
+				setLoadingDownload(false);
+			});
+		} else {
+			toast.error("Por favor, selecione um cliente.");
+		}
+	};
 
 	return (
-		<div className="min-h-[500px] w-full md:w-3/5 flex flex-col gap-4 p-4 rounded-2xl overflow-y-auto shadow-md bg-gray-400 bg-clip-padding backdrop-filter bg-opacity-20 backdrop-blur-md">
+		<div className="h-[80vh] w-full md:w-3/5 flex flex-col gap-4 p-4 rounded-2xl overflow-y-auto shadow-md bg-gray-400 bg-clip-padding backdrop-filter bg-opacity-20 backdrop-blur-md">
 			<div className="w-full flex items-center justify-between">
-				<OutlineButton label="Relatório" Icon={FiDownload} />
+				<OutlineButton label="Relatório" Icon={FiDownload} onClick={handleDownload} />
 				<SolidButton onClick={() => setAddCustomer(true)} label="Cliente" Icon={FiPlus} />
 			</div>
 			<hr className="border-white" />
 
-			{retrieveCustomer ? (
+			{customerLoading ? (
+				<Loader />
+			) : retrieveCustomer ? (
 				<SelectedCustomer
 					id={retrieveCustomer.id}
 					avatarUrl={retrieveCustomer.avatarUrl}

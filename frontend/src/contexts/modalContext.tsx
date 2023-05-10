@@ -33,8 +33,8 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
 	const [editCustomer, setEditCustomer] = useState<Customer | null>(null);
 	const [deleteCustomer, setDeleteCustomer] = useState<string>("");
 	const [addContact, setAddContact] = useState(false);
-	const [editContact, setEditContact] = useState(false);
-	const [deleteContact, setDeleteContact] = useState(false);
+	const [editContact, setEditContact] = useState<Contact | null>(null);
+	const [deleteContact, setDeleteContact] = useState<string>("");
 
 	return (
 		<ModalContext.Provider

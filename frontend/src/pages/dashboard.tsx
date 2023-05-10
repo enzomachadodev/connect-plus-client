@@ -1,37 +1,48 @@
-import { AddContact } from "@/components/AddContact";
+import { AddContact } from "@/components/modals/AddContact";
 import { AddCustomer } from "@/components/modals/AddCustomer";
 import { CurrentCustomer } from "@/components/CurrentCustomer.tsx";
 import { CustomersList } from "@/components/CustomersList";
-import { DeleteContact } from "@/components/DeleteContact";
-import { DeleteCustomer } from "@/components/DeleteCustomer";
-import { EditContact } from "@/components/EditContact";
+import { DeleteContact } from "@/components/modals/DeleteContact";
+import { DeleteCustomer } from "@/components/modals/DeleteCustomer";
+import { EditContact } from "@/components/modals/EditContact";
 import { EditCustomer } from "@/components/modals/EditCustomer";
-import { MenuMobile } from "@/components/MenuMobile";
+import { MenuMobile } from "@/components/header/MenuMobile";
 import { NavBar } from "@/components/header/NavBar";
 
 import { api } from "@/services/api";
 import { Customer } from "@/types/customers";
 import { destroyCookie, parseCookies } from "nookies";
+import { useContext } from "react";
+import { ModalContext } from "@/contexts/modalContext";
 
 interface DashboardProps {
 	customers: Customer[] | null;
 }
 
 export default function Dashboard({ customers }: DashboardProps) {
+	const {
+		addCustomer,
+		addContact,
+		editCustomer,
+		editContact,
+		deleteCustomer,
+		deleteContact,
+		menuMobile,
+	} = useContext(ModalContext);
 	return (
-		<div className="w-full h-full border overflow-hidden">
+		<div className="w-full h-full overflow-hidden">
 			<NavBar />
 			<div className="container p-4 max-w-screen-xl mx-auto md:flex md:flex-row flex-col justify-between items-center md:items-start gap-4">
 				<CurrentCustomer />
 				<CustomersList customers={customers} />
 			</div>
-			{/* <MenuMobile /> */}
-			<AddCustomer />
-			{/*<EditCustomer />
-			<DeleteCustomer />
-			<AddContact />
-			<EditContact />
-			<DeleteContact /> */}
+			{menuMobile && <MenuMobile customers={customers} />}
+			{addCustomer && <AddCustomer />}
+			{editCustomer && <EditCustomer />}
+			{deleteCustomer && <DeleteCustomer />}
+			{addContact && <AddContact />}
+			{editContact && <EditContact />}
+			{deleteContact && <DeleteContact />}
 		</div>
 	);
 }
@@ -41,8 +52,6 @@ export async function getServerSideProps(ctx: any) {
 
 	try {
 		const { "connectplus.token": token } = parseCookies(ctx);
-
-		console.log(token, "@@@@@@@");
 
 		if (!token) {
 			return {
@@ -62,6 +71,14 @@ export async function getServerSideProps(ctx: any) {
 					permanent: false,
 				},
 			};
+		} else {
+			try {
+				const { data } = await api.get("/users/customers");
+
+				customers = data;
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	} catch (err) {
 		destroyCookie(ctx, "nodebooker.token");
@@ -71,14 +88,6 @@ export async function getServerSideProps(ctx: any) {
 				permanent: false,
 			},
 		};
-	}
-
-	try {
-		const { data } = await api.get("/users/customers");
-
-		customers = data;
-	} catch (err) {
-		console.log(err);
 	}
 
 	return {

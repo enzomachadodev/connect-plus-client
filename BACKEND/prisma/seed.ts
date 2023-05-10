@@ -1,14 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
+import { hash } from "bcrypt";
 
 const prisma = new PrismaClient();
 
 async function main() {
+	const hashPassword = await hash("12345", 10);
 	const user = await prisma.user.create({
 		data: {
 			name: "Enzo Machado",
 			email: "enzomachado@email.com",
-			password: "12345",
+			password: hashPassword,
 			avatarUrl: "https://github.com/m4chado.png",
 		},
 	});

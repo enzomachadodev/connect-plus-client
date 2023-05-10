@@ -1,60 +1,53 @@
 import { ModalContext } from "@/contexts/modalContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ModalContainer from "./ModalContainer";
 import DefaultInput from "../inputs/DefaultInput";
 import SolidButton from "../buttons/SolidButton";
+import { ContactContext } from "@/contexts/contactContext";
 import { CustomerContext } from "@/contexts/customerContext";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
-import { Customer } from "@/types/customers";
 
-const updateCustomerFormSchema = z.object({
+const createContactFormSchema = z.object({
 	name: z.string().nonempty("Nome é obrigatório"),
 	email: z.string().email("Digite um email válido").nonempty("Email é obrigatório"),
 	phone: z.string().nonempty("Número é obrigatório"),
-	avatarUrl: z.string().nonempty("Adicione uma URL de imagem"),
+	avatarUrl: z.string().optional(),
 });
 
-export type UpdateCustomerFormData = z.infer<typeof updateCustomerFormSchema>;
+export type CreateContactFormData = z.infer<typeof createContactFormSchema>;
 
-export const EditCustomer = () => {
-	const { editCustomer, setEditCustomer } = useContext(ModalContext);
-	const { updateCustomer, isLoading } = useContext(CustomerContext);
+export const AddContact = () => {
+	const { addContact, setAddContact } = useContext(ModalContext);
+	const { createContact, isLoading } = useContext(ContactContext);
+	const { currentCustomer } = useContext(CustomerContext);
 
 	const {
 		reset,
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<UpdateCustomerFormData>({
-		resolver: zodResolver(updateCustomerFormSchema),
-		defaultValues: {
-			...editCustomer,
-		},
+	} = useForm<CreateContactFormData>({
+		resolver: zodResolver(createContactFormSchema),
 	});
 
 	const handleClose = () => {
 		reset();
-		setEditCustomer(null);
+		setAddContact(false);
 	};
 
-	const onSubmit: SubmitHandler<UpdateCustomerFormData> = async (data) => {
-		if (editCustomer) {
-			updateCustomer(data, editCustomer.id, handleClose);
-		} else {
-			toast.error("Ops! Algo deu errado");
-		}
+	const onSubmit: SubmitHandler<CreateContactFormData> = async (data) => {
+		createContact({ ...data, customerId: currentCustomer }, handleClose);
 	};
 
 	return (
-		<ModalContainer isOpen={!!editCustomer} onClose={handleClose}>
-			<h2 className="text-4xl font-bold">Editar dados do Cliente!</h2>
+		<ModalContainer isOpen={addContact} onClose={() => setAddContact(false)}>
+			<h2 className="text-4xl font-bold">Adicione um Novo Contato!</h2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<DefaultInput
 					id="name"
-					label="Nome do Cliente"
+					label="Nome do Contato"
 					type="text"
 					register={register}
 					errors={!!errors.name}
@@ -62,7 +55,7 @@ export const EditCustomer = () => {
 				/>
 				<DefaultInput
 					id="avatarUrl"
-					label="URL da foto"
+					label="URL da foto (opcional)"
 					type="text"
 					register={register}
 					errors={!!errors.avatarUrl}
@@ -70,15 +63,15 @@ export const EditCustomer = () => {
 				/>
 				<DefaultInput
 					id="email"
-					label="Email do Cliente"
-					type="email"
+					label="Email do Contato"
+					type="text"
 					register={register}
 					errors={!!errors.email}
 					errorMessage={errors.email && errors.email.message}
 				/>
 				<DefaultInput
 					id="phone"
-					label="Número do Cliente"
+					label="Número do Contato"
 					type="text"
 					register={register}
 					errors={!!errors.phone}
@@ -86,9 +79,9 @@ export const EditCustomer = () => {
 				/>
 				<SolidButton
 					disabled={isLoading}
-					label="Salvar"
+					label="Adicionar"
 					type="submit"
-					classname="mt-9 w-full"
+					classname="w-full"
 				/>
 			</form>
 		</ModalContainer>

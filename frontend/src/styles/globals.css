@@ -5,3 +5,24 @@
 * {
 	font-family: "Poppins", sans-serif;
 }
+
+/* Defina a cor da barra de rolagem */
+*::-webkit-scrollbar {
+	width: 10px;
+	background-color: transparent;
+}
+
+/* Adicione um efeito de vidro desfocado à barra de rolagem */
+*::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Alterne a cor do efeito de vidro desfocado quando a barra de rolagem estiver em foco */
+*::-webkit-scrollbar-thumb:focus {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-resp p:nth-child(1) {
+	display: none;
+}

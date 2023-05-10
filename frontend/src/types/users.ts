@@ -7,5 +7,11 @@ export interface User {
 export interface UserCreateRequest {
 	name: string;
 	email: string;
+	password: string;
 	avatarUrl?: string;
+}
+
+export interface UserLoginRequest {
+	email: string;
+	password: string;
 }

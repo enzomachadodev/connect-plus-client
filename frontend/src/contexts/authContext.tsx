@@ -4,20 +4,30 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import { User } from "@/types/users";
+import { User, UserCreateRequest, UserLoginRequest } from "@/types/users";
 import { UseFormReset } from "react-hook-form";
+import { Router } from "next/router";
 
 interface IAuthContextData {
 	currentUser: User | null;
 	authLoading: boolean;
-	setAuthLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	loginUser: (
-		data: any,
+		data: UserLoginRequest,
 		reset: UseFormReset<{
 			email: string;
 			password: string;
 		}>
 	) => Promise<void>;
+	registerUser: (
+		data: UserCreateRequest,
+		reset: UseFormReset<{
+			email: string;
+			password: string;
+			name: string;
+			avatarUrl?: string | undefined;
+		}>
+	) => Promise<void>;
+	logoutUser: () => void;
 }
 
 interface IAuthProviderProps {
@@ -30,6 +40,21 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 	const route = useRouter();
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
 	const [authLoading, setAuthLoading] = useState(false);
+
+	const logoutUser = () => {
+		setCurrentUser(null);
+		destroyCookie(null, "connectplus.token");
+
+		api.defaults.headers.common.Authorization = "";
+
+		fetch("/api/logout")
+			.then(() => {
+				route.push("/");
+			})
+			.catch((error) => {
+				console.error("Erro ao fazer logout:", error);
+			});
+	};
 
 	const getUser = async () => {
 		try {
@@ -52,7 +77,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 	}, []);
 
 	const loginUser = async (
-		data: any,
+		data: UserLoginRequest,
 		reset: UseFormReset<{
 			email: string;
 			password: string;
@@ -87,16 +112,29 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 		}
 	};
 
-	const registerUser = async (data: any) => {
+	const registerUser = async (
+		data: UserCreateRequest,
+		reset: UseFormReset<{
+			email: string;
+			password: string;
+			name: string;
+			avatarUrl?: string | undefined;
+		}>
+	) => {
+		toast.loading("Criando sua conta...");
 		setAuthLoading(true);
 		try {
 			await api.post("/users", data).then((res) => {
-				setAuthLoading(false);
+				toast.dismiss();
 				toast.success("Cadastro feito com sucesso! 🥳");
-				route.push("/dashboard");
+				setAuthLoading(false);
+				reset();
+				route.replace("/");
 			});
 		} catch (err) {
+			toast.dismiss();
 			setAuthLoading(false);
+			console.log(err);
 			if (err instanceof AxiosError) {
 				toast.error(err.response?.data.message);
 			}
@@ -104,7 +142,9 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ currentUser, authLoading, setAuthLoading, loginUser }}>
+		<AuthContext.Provider
+			value={{ logoutUser, currentUser, authLoading, loginUser, registerUser }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

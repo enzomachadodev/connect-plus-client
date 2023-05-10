@@ -7,13 +7,12 @@ import { useContext } from "react";
 import Avatar from "./Avatar";
 
 export const NavBar = () => {
-	const { currentUser } = useContext(AuthContext);
+	const { currentUser, logoutUser } = useContext(AuthContext);
 	const { setMenuMobile } = useContext(ModalContext);
 	const router = useRouter();
 
 	const handleLogout = () => {
-		//logoutUser();
-		router.push("/");
+		logoutUser();
 	};
 
 	return (

@@ -3,12 +3,11 @@ import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 import { useContext } from "react";
 
 import { ModalContext } from "@/contexts/modalContext";
-import { CustomerContext } from "@/contexts/customerContext";
 import { Customer } from "@/types/customers";
 import ContactCard from "./ContactCard";
-import OutlineButton from "./buttons/OutlineButton";
 import SolidButton from "./buttons/SolidButton";
 import CustomerCard from "./CustomerCard";
+import { formatDate } from "@/utils/formatDate";
 
 export const SelectedCustomer = ({
 	id,
@@ -22,39 +21,32 @@ export const SelectedCustomer = ({
 	const { setAddContact, setEditCustomer, setEditContact, setDeleteContact, setDeleteCustomer } =
 		useContext(ModalContext);
 
-	const formatData = (createdAt: Date) => {
-		const date = new Date(createdAt);
-		const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-		return `Added in ${formattedDate}`;
-	};
-
 	return (
 		<>
 			<CustomerCard
 				avatarUrl={avatarUrl}
-				createdAt={formatData(createdAt)}
+				createdAt={formatDate(createdAt)}
 				email={email}
 				name={name}
 				phone={phone}
 			/>
 			<div className="w-full flex gap-2 md:gap-4 items-center justify-between">
-				<OutlineButton
-					classname="!py-2 !px-4 text-base"
-					label="Excluir"
-					Icon={FiTrash2}
+				<button
+					className="flex items-center tex-base gap-2 border py-2 px-2 rounded-xl"
 					onClick={() => setDeleteCustomer(id)}
-					iconSize={20}
-				/>
-
-				<OutlineButton
-					classname="!py-2 !px-4 text-base"
-					label="Editar"
-					Icon={FiEdit}
+				>
+					<FiTrash2 size={20} />
+					<p className="">Excluir</p>
+				</button>
+				<button
+					className="flex items-center tex-base gap-2 border py-2 px-2 md:px-4 rounded-xl"
 					onClick={() =>
 						setEditCustomer({ id, avatarUrl, createdAt, email, name, phone })
 					}
-					iconSize={20}
-				/>
+				>
+					<FiEdit size={20} />
+					<p className="">Editar</p>
+				</button>
 
 				<SolidButton
 					classname="!h-[42px] !px-4 text-base"
@@ -67,7 +59,7 @@ export const SelectedCustomer = ({
 
 			<hr className="border-white" />
 
-			<ul className="h-2/3 w-full overflow-y-auto overflow-x-hidden flex flex-col flex-nowrap gap-4">
+			<ul className="h-2/3 w-full overflow-y-scroll overflow-x-hidden flex flex-col flex-nowrap gap-4 pr-2">
 				{contacts?.length ? (
 					contacts.map((c) => (
 						<ContactCard
@@ -76,7 +68,7 @@ export const SelectedCustomer = ({
 							name={c.name}
 							email={c.email}
 							phone={c.phone}
-							createdAt={formatData(c.createdAt)}
+							createdAt={formatDate(c.createdAt)}
 							onDelete={() => setDeleteContact(c.id)}
 							onEdit={() => setEditContact(c)}
 						/>

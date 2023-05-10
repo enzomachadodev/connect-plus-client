@@ -20,47 +20,45 @@ const ContactCard = ({
 	onEdit,
 }: ContactCardProps) => {
 	return (
-		<li className="w-full border border-gray-100 dark:border-gray-400 rounded-xl p-2 md:p-4 gap-2 md:gap-4 flex items-center">
-			<div className="flex flex-col items-center">
-				<div className="h-16 w-16">
-					<img src={avatarUrl} alt="" className="h-full rounded-full w-full" />
+		<li className="w-full rounded-xl p-4 gap-4 flex items-centerflex  items-center bg-gray-400 bg-clip-padding backdrop-filter bg-opacity-0 backdrop-blur-md">
+			<div className="flex flex-col items-center w-20">
+				<div className="h-14 md:h-16 w-14 md:w-16">
+					<img
+						src={avatarUrl}
+						alt=""
+						className="h-full rounded-full w-full object-cover"
+					/>
 				</div>
-				<div className="flex gap-2 mt-2">
-					<button
-						onClick={onDelete}
-						className="border border-gray-100 rounded-lg p-1 flex items-center justify-center"
-					>
+				<div className="flex w-full justify-around mt-2">
+					<button onClick={onDelete} className=" flex items-center justify-center">
 						<FiTrash2 />
 					</button>
-					<button
-						onClick={onEdit}
-						className="border border-gray-100 rounded-lg p-1 flex items-center justify-center"
-					>
+					<button onClick={onEdit} className="flex items-center justify-center">
 						<FiEdit />
 					</button>
 				</div>
 			</div>
 
-			<ul className="w-full flex flex-col items-start justify-center">
-				<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
+			<ul className="w-full flex flex-col items-start justify-center overflow-hidden">
+				<li className="flex flex-row flex-nowrap whitespace-nowrap items-center gap-2 overflow-hidden text-ellipsis">
 					<span>
 						<FiCalendar />
 					</span>
 					<h3>{createdAt}</h3>
 				</li>
-				<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
+				<li className="flex flex-row flex-nowrap whitespace-nowrap items-center gap-2 overflow-hidden text-ellipsis">
 					<span>
 						<FiUser />
 					</span>
 					<h3>{name}</h3>
 				</li>
-				<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
+				<li className="flex flex-row flex-nowrap whitespace-nowrap items-center gap-2 overflow-hidden text-ellipsis">
 					<span>
 						<FiMail />
 					</span>
 					{email}
 				</li>
-				<li className="flex flex-row flex-nowrap items-center gap-2 overflow-hidden text-ellipsis">
+				<li className="flex flex-row flex-nowrap whitespace-nowrap items-center gap-2 overflow-hidden text-ellipsis">
 					<span>
 						<FiPhone />
 					</span>

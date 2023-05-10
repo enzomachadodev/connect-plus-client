@@ -12,4 +12,13 @@ export interface ContactCreateRequest {
 	email: string;
 	phone: string;
 	avatarUrl?: string;
+	customerId: string;
+}
+
+export interface ContactUpdateRequest {
+	name?: string;
+	email?: string;
+	phone?: string;
+	avatarUrl?: string;
+	customerId: string;
 }

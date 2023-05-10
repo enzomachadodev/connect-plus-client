@@ -1,12 +1,20 @@
 import React from "react";
 import { FiSearch } from "react-icons/fi";
+interface SearchInputProps {
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	value: string;
+}
 
-const SearchInput = () => {
+const SearchInput = ({ onChange, value }: SearchInputProps) => {
 	return (
-		<div className="flex items-center gap-2 px-4 h-[56px] rounded-xl hover:shadow-lg active:shadow-sm  shadow-md bg-gray-100 bg-clip-padding backdrop-filter bg-opacity-50">
-			<FiSearch size={25} />
+		<div className="text-white flex items-center gap-4 px-4 min-h-[54px] rounded-xl border border-white">
+			<span className="">
+				<FiSearch size={25} />
+			</span>
 			<input
+				onChange={onChange}
 				type="text"
+				value={value}
 				className="appearance-none border-none bg-transparent focus:outline-none "
 			/>
 		</div>

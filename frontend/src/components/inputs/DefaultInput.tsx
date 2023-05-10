@@ -6,6 +6,7 @@ interface DefaultInputProps {
 	errors: boolean;
 	errorMessage?: string;
 	value?: string;
+	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const DefaultInput = ({
@@ -16,6 +17,7 @@ const DefaultInput = ({
 	errors,
 	errorMessage,
 	value,
+	...rest
 }: DefaultInputProps) => {
 	return (
 		<div className="my-4">
@@ -28,6 +30,7 @@ const DefaultInput = ({
 				className={`pl-4 w-full text-gray-900 h-14 rounded-xl border-2 ${
 					errors ? "border-red-500" : ""
 				}`}
+				{...rest}
 			/>
 			<p className=" text-red-500">{errorMessage}</p>
 		</div>

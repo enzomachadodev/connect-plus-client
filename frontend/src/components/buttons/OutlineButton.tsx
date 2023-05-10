@@ -21,15 +21,14 @@ const OutlineButton = ({
 		<button
 			type={type}
 			onClick={onClick}
-			className={`${classname} py-3 px-5 gap-1 flex items-center justify-center font-medium border border-white hover:bg-gray-100/20 text-white shadow-md hover:shadow-xl duration-200 rounded-xl text-lg`}
+			className={`${classname} py-3 px-5 gap-1 flex items-center justify-center font-medium border border-white text-white shadow-md duration-200 rounded-xl text-lg`}
 		>
 			{Icon && (
 				<span className="ml-[-1px] mr-[2px]">
 					<Icon size={iconSize} />
 				</span>
 			)}
-
-			{label}
+			<p>{label}</p>
 		</button>
 	);
 };

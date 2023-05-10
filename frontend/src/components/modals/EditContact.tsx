@@ -5,56 +5,58 @@ import { z } from "zod";
 import ModalContainer from "./ModalContainer";
 import DefaultInput from "../inputs/DefaultInput";
 import SolidButton from "../buttons/SolidButton";
-import { CustomerContext } from "@/contexts/customerContext";
+import { ContactContext } from "@/contexts/contactContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { Customer } from "@/types/customers";
+import { CustomerContext } from "@/contexts/customerContext";
 
-const updateCustomerFormSchema = z.object({
+const updateContactFormSchema = z.object({
 	name: z.string().nonempty("Nome é obrigatório"),
 	email: z.string().email("Digite um email válido").nonempty("Email é obrigatório"),
 	phone: z.string().nonempty("Número é obrigatório"),
 	avatarUrl: z.string().nonempty("Adicione uma URL de imagem"),
 });
 
-export type UpdateCustomerFormData = z.infer<typeof updateCustomerFormSchema>;
+export type UpdateContactFormData = z.infer<typeof updateContactFormSchema>;
 
-export const EditCustomer = () => {
-	const { editCustomer, setEditCustomer } = useContext(ModalContext);
-	const { updateCustomer, isLoading } = useContext(CustomerContext);
+export const EditContact = () => {
+	const { editContact, setEditContact } = useContext(ModalContext);
+	const { currentCustomer } = useContext(CustomerContext);
+	const { updateContact, isLoading } = useContext(ContactContext);
 
 	const {
 		reset,
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<UpdateCustomerFormData>({
-		resolver: zodResolver(updateCustomerFormSchema),
+	} = useForm<UpdateContactFormData>({
+		resolver: zodResolver(updateContactFormSchema),
 		defaultValues: {
-			...editCustomer,
+			...editContact,
 		},
 	});
 
 	const handleClose = () => {
 		reset();
-		setEditCustomer(null);
+		setEditContact(null);
 	};
 
-	const onSubmit: SubmitHandler<UpdateCustomerFormData> = async (data) => {
-		if (editCustomer) {
-			updateCustomer(data, editCustomer.id, handleClose);
+	const onSubmit: SubmitHandler<UpdateContactFormData> = async (data) => {
+		if (editContact) {
+			//console.log({ ...data, customerId: currentCustomer });
+			updateContact({ ...data, customerId: currentCustomer }, editContact.id, handleClose);
 		} else {
 			toast.error("Ops! Algo deu errado");
 		}
 	};
 
 	return (
-		<ModalContainer isOpen={!!editCustomer} onClose={handleClose}>
-			<h2 className="text-4xl font-bold">Editar dados do Cliente!</h2>
+		<ModalContainer isOpen={!!editContact} onClose={handleClose}>
+			<h2 className="text-4xl font-bold">Editar dados do Contato!</h2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<DefaultInput
 					id="name"
-					label="Nome do Cliente"
+					label="Nome do Contato"
 					type="text"
 					register={register}
 					errors={!!errors.name}
@@ -70,7 +72,7 @@ export const EditCustomer = () => {
 				/>
 				<DefaultInput
 					id="email"
-					label="Email do Cliente"
+					label="Email do Contato"
 					type="email"
 					register={register}
 					errors={!!errors.email}
@@ -78,7 +80,7 @@ export const EditCustomer = () => {
 				/>
 				<DefaultInput
 					id="phone"
-					label="Número do Cliente"
+					label="Número do Contato"
 					type="text"
 					register={register}
 					errors={!!errors.phone}
