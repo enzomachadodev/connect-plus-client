@@ -1,14 +1,14 @@
-import { Contact, Customer, User } from "@prisma/client";
 import * as express from "express";
-import { IUserRequest, IUserResponse, IUserRetrieve } from "../../interfaces/users.interface";
+import { UserResponse } from "../../serializers/users.serializer";
+import { CustomerResponse } from "../../serializers/customer.serializer";
+import { ContactResponse } from "../../serializers/contacts.serializer";
 
 declare global {
 	namespace Express {
 		interface Request {
-			userId: string;
-			user: User;
-			customer: Customer;
-			contact: Contact;
+			user: UserResponse;
+			customer: CustomerResponse;
+			contact: ContactResponse;
 		}
 	}
 }

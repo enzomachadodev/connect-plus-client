@@ -2,7 +2,6 @@ import { Router } from "express";
 import { createUserController } from "../controllers/users/createUser.controller";
 import { deleteUserController } from "../controllers/users/deleteUser.controller";
 import { listCustomersofUserController } from "../controllers/users/listCustomersOfUser.controller";
-import { listUsersController } from "../controllers/users/listUsers.controller";
 import { retrieveUserController } from "../controllers/users/retrieveUser.controller";
 import { updateUserController } from "../controllers/users/updateUser.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware";
@@ -12,7 +11,7 @@ import { ensureAdminOrOwnerMiddleware } from "../middlewares/ensureIsAdminOrOwne
 import { ensureUserExistsMiddleware } from "../middlewares/ensureUserExists.middleware";
 import { ensureUserIsActive } from "../middlewares/ensureUserIsActive.middleware";
 import {
-	userRequestSerializer,
+	userCreateRequestSerializer,
 	userUpdateRequestSerializer,
 } from "../serializers/users.serializer";
 
@@ -20,12 +19,11 @@ export const userRoutes = Router();
 
 userRoutes.post(
 	"",
-	ensureDataIsValidMiddleware(userRequestSerializer),
+	ensureDataIsValidMiddleware(userCreateRequestSerializer),
 	ensureEmailNotExistsMiddleware,
 	createUserController
 );
-userRoutes.get("", ensureAuthMiddleware, ensureAdminOrOwnerMiddleware, listUsersController);
-userRoutes.get("/profile", ensureAuthMiddleware, retrieveUserController);
+userRoutes.get("", ensureAuthMiddleware, retrieveUserController);
 userRoutes.get("/customers", ensureAuthMiddleware, listCustomersofUserController);
 userRoutes.patch(
 	"/:id",
@@ -38,7 +36,7 @@ userRoutes.patch(
 	updateUserController
 );
 userRoutes.delete(
-	"",
+	"/:id",
 	ensureAuthMiddleware,
 	ensureUserExistsMiddleware,
 	ensureUserIsActive,

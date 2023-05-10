@@ -3,14 +3,14 @@ import { ZodSchema } from "zod";
 
 export const ensureDataIsValidMiddleware =
 	(schema: ZodSchema) => async (req: Request, res: Response, next: NextFunction) => {
-		const result = schema.safeParse(req.body);
+		try {
+			const validatedData = await schema.parse(req.body);
+			req.body = validatedData;
 
-		if (!result.success) {
-			const formattedError = result.error.issues;
-
-			return res.status(400).json(formattedError);
+			return next();
+		} catch (err: any) {
+			return res.status(400).json({
+				error: err.errors,
+			});
 		}
-
-		req.body = result.data;
-		return next();
 	};

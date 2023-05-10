@@ -7,7 +7,7 @@ import { ensureCustomerEmailNotExistsMiddleware } from "../middlewares/ensureCus
 import { ensureCustomerExistsMiddleware } from "../middlewares/ensureCustomerExists.middleware";
 import { ensureDataIsValidMiddleware } from "../middlewares/ensureDataIsValid.middleware";
 import {
-	customerRequestSerializer,
+	customerCreateRequestSerializer,
 	customerUpdateRequestSerializer,
 } from "../serializers/customer.serializer";
 import { deleteCustomerController } from "../controllers/customers/deleteCustomer.controller";
@@ -17,7 +17,7 @@ export const customerRoutes = Router();
 customerRoutes.post(
 	"",
 	ensureAuthMiddleware,
-	ensureDataIsValidMiddleware(customerRequestSerializer),
+	ensureDataIsValidMiddleware(customerCreateRequestSerializer),
 	ensureCustomerEmailNotExistsMiddleware,
 	createCustomerController
 );

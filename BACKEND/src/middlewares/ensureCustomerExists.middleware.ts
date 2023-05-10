@@ -15,7 +15,7 @@ export const ensureCustomerExistsMiddleware = async (
 		},
 	});
 	if (!customer) {
-		throw new AppError("Customer not found", 404);
+		throw new AppError("Cliente não encontrado", 404);
 	}
 
 	req.customer = customer;

@@ -1,17 +1,21 @@
 import prisma from "../../prismadb";
-import { ICustomerRequest, ICustomerResponse } from "../../interfaces/customers.interface";
-import { customerResponseSerializer } from "../../serializers/customer.serializer";
+import {
+	CustomerCreateRequest,
+	CustomerResponse,
+	customerResponseSerializer,
+} from "../../serializers/customer.serializer";
 
 export const createCustomerService = async (
-	{ name, email, phone, avatarUrl }: ICustomerRequest,
+	userData: CustomerCreateRequest,
 	userId: string
-): Promise<ICustomerResponse> => {
+): Promise<CustomerResponse> => {
 	const newCustomer = await prisma.customer.create({
 		data: {
-			name,
-			email,
-			phone,
-			avatarUrl,
+			...userData,
+			avatarUrl: userData.avatarUrl
+				? userData.avatarUrl
+				: "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg",
+
 			userId: userId,
 		},
 	});

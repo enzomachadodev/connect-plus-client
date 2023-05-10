@@ -1,15 +1,20 @@
-import { Customer } from "@prisma/client";
 import prisma from "../../prismadb";
-import { ICustomerResponse } from "../../interfaces/customers.interface";
-import { customerResponseSerializer } from "../../serializers/customer.serializer";
+import {
+	CustomerResponse,
+	customerResponseSerializer,
+} from "../../serializers/customer.serializer";
 
-export const retrieveCustomerService = async (customer: Customer): Promise<ICustomerResponse> => {
+export const retrieveCustomerService = async (customerId: string): Promise<CustomerResponse> => {
 	const retriviedCustomer = await prisma.customer.findUnique({
 		where: {
-			id: customer.id,
+			id: customerId,
 		},
 		include: {
-			contacts: true,
+			contacts: {
+				orderBy: {
+					createdAt: "desc",
+				},
+			},
 		},
 	});
 

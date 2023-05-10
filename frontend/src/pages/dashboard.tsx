@@ -1,39 +1,87 @@
-import { AddContact } from "@/components/AddContact";
-import { AddCustomer } from "@/components/AddCustomer";
-import { Customer } from "@/components/Customer";
+import { AddContact } from "@/components/modals/AddContact";
+import { AddCustomer } from "@/components/modals/AddCustomer";
+import { CurrentCustomer } from "@/components/CurrentCustomer.tsx";
 import { CustomersList } from "@/components/CustomersList";
-import { DeleteContact } from "@/components/DeleteContact";
-import { DeleteCustomer } from "@/components/DeleteCustomer";
-import { EditContact } from "@/components/EditContact";
-import { EditCustomer } from "@/components/EditCustomer";
-import { MenuMobile } from "@/components/MenuMobile";
-import { Nav } from "@/components/Nav";
-import { GetServerSideProps } from "next";
-import nookies from "nookies";
+import { DeleteContact } from "@/components/modals/DeleteContact";
+import { DeleteCustomer } from "@/components/modals/DeleteCustomer";
+import { EditContact } from "@/components/modals/EditContact";
+import { EditCustomer } from "@/components/modals/EditCustomer";
+import { MenuMobile } from "@/components/header/MenuMobile";
+import { NavBar } from "@/components/header/NavBar";
 
-export default function Dashboard() {
+import { api } from "@/services/api";
+import { Customer } from "@/types/customers";
+import { destroyCookie, parseCookies } from "nookies";
+import { useContext } from "react";
+import { ModalContext } from "@/contexts/modalContext";
+
+interface DashboardProps {
+	customers: Customer[] | null;
+}
+
+export default function Dashboard({ customers }: DashboardProps) {
+	const {
+		addCustomer,
+		addContact,
+		editCustomer,
+		editContact,
+		deleteCustomer,
+		deleteContact,
+		menuMobile,
+	} = useContext(ModalContext);
 	return (
-		<div className="w-full h-screen bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-0 p-2 md:p-0">
-			<Nav />
-			<div className="container max-w-screen-lg mx-auto my-4 md:flex md:flex-row flex-col justify-between items-center h-5/6 gap-4">
-				<Customer />
-				<CustomersList />
+		<div className="w-full h-full overflow-hidden">
+			<NavBar />
+			<div className="container p-4 max-w-screen-xl mx-auto md:flex md:flex-row flex-col justify-between items-center md:items-start gap-4">
+				<CurrentCustomer />
+				<CustomersList customers={customers} />
 			</div>
-			<MenuMobile />
-			<AddCustomer />
-			<EditCustomer />
-			<DeleteCustomer />
-			<AddContact />
-			<EditContact />
-			<DeleteContact />
+			{menuMobile && <MenuMobile customers={customers} />}
+			{addCustomer && <AddCustomer />}
+			{editCustomer && <EditCustomer />}
+			{deleteCustomer && <DeleteCustomer />}
+			{addContact && <AddContact />}
+			{editContact && <EditContact />}
+			{deleteContact && <DeleteContact />}
 		</div>
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const cookies = nookies.get(ctx);
+export async function getServerSideProps(ctx: any) {
+	let customers = null;
 
-	if (!cookies["token"]) {
+	try {
+		const { "connectplus.token": token } = parseCookies(ctx);
+
+		if (!token) {
+			return {
+				redirect: {
+					destination: "/",
+					permanent: false,
+				},
+			};
+		}
+		api.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+		const { data } = await api.get("/users");
+		if (!data) {
+			return {
+				redirect: {
+					destination: "/",
+					permanent: false,
+				},
+			};
+		} else {
+			try {
+				const { data } = await api.get("/users/customers");
+
+				customers = data;
+			} catch (err) {
+				console.log(err);
+			}
+		}
+	} catch (err) {
+		destroyCookie(ctx, "nodebooker.token");
 		return {
 			redirect: {
 				destination: "/",
@@ -41,7 +89,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			},
 		};
 	}
+
 	return {
-		props: { name: cookies["token"] },
+		props: {
+			customers,
+		},
 	};
-};
+}

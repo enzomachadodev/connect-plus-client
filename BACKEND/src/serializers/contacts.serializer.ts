@@ -1,12 +1,14 @@
 import { z } from "zod";
 
-export const contactRequestSerializer = z.object({
-	email: z.string().email({ message: "Invalid email address" }),
+export const contactCreateRequestSerializer = z.object({
+	email: z.string().email({ message: "Formato de email inválido" }),
 	name: z.string(),
 	phone: z.string(),
-	avatarUrl: z.string().startsWith("https://", { message: "Must provide secure URL" }),
+	avatarUrl: z.string().optional(),
 	customerId: z.string().uuid(),
 });
+
+export type ContactCreateRequest = z.infer<typeof contactCreateRequestSerializer>;
 
 export const contactResponseSerializer = z.object({
 	id: z.string(),
@@ -14,8 +16,10 @@ export const contactResponseSerializer = z.object({
 	name: z.string(),
 	email: z.string().email(),
 	phone: z.string(),
-	avatarUrl: z.string(),
+	avatarUrl: z.string().optional(),
 });
+
+export type ContactResponse = z.infer<typeof contactResponseSerializer>;
 
 export const contactUpdateRequestSerializer = z.object({
 	email: z.string().email().optional(),
@@ -24,5 +28,7 @@ export const contactUpdateRequestSerializer = z.object({
 	avatarUrl: z.string().optional(),
 	customerId: z.string(),
 });
+
+export type ContactUpdateRequest = z.infer<typeof contactUpdateRequestSerializer>;
 
 export const listContactsResponseSerializer = z.array(contactResponseSerializer);

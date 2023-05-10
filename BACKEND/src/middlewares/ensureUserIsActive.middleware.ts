@@ -12,7 +12,7 @@ export const ensureUserIsActive = async (req: Request, res: Response, next: Next
 			},
 		});
 		if (!user?.isActive) {
-			throw new AppError("This account has been disabled", 404);
+			throw new AppError("Conta desativada", 404);
 		}
 	}
 

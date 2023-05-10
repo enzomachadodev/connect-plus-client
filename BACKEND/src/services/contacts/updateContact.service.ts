@@ -1,24 +1,20 @@
 import prisma from "../../prismadb";
 import {
-	IContactResponse,
-	IContactRetrieve,
-	IContactUpdate,
-} from "../../interfaces/contacts.interface";
-import { contactResponseSerializer } from "../../serializers/contacts.serializer";
+	ContactResponse,
+	ContactUpdateRequest,
+	contactResponseSerializer,
+} from "../../serializers/contacts.serializer";
 
 export const updateContactService = async (
-	{ name, email, phone, avatarUrl }: IContactUpdate,
-	Contact: IContactRetrieve
-): Promise<IContactResponse> => {
+	data: ContactUpdateRequest,
+	contactId: string
+): Promise<ContactResponse> => {
 	const updatedContact = await prisma.contact.update({
 		where: {
-			id: Contact.id,
+			id: contactId,
 		},
 		data: {
-			name,
-			email,
-			phone,
-			avatarUrl,
+			...data,
 		},
 	});
 
