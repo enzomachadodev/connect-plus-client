@@ -16,6 +16,14 @@ Este projeto envolve o desenvolvimento de uma plataforma de gerenciamento de cli
 
 Ademais, a plataforma disponibiliza a funcionalidade de geração de relatórios em formato PDF, contendo todas as informações pertinentes a cada cliente e seus respectivos contatos.
 
+## 👩🏻‍💻Ultilização
+
+Para conferir o projeto pronto [Clique aqui](https://kenziecommerce34.onrender.com)
+
+A URL base da API é:
+
+https://connect-plus-api.onrender.com
+
 ## 💾Instalação
 
 # Back-end:
