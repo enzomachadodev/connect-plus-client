@@ -36,7 +36,13 @@ export const NavBar = () => {
 							handleLogout={handleLogout}
 						/>
 					) : (
-						<h1>fazer login</h1>
+						<Avatar
+							name={"Carregando..."}
+							avatarUrl={
+								"https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg"
+							}
+							handleLogout={handleLogout}
+						/>
 					)}
 				</div>
 			</div>
