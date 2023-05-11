@@ -18,7 +18,7 @@ Ademais, a plataforma disponibiliza a funcionalidade de geração de relatórios
 
 ## 👩🏻‍💻Ultilização
 
-Para conferir o projeto pronto [Clique aqui](https://kenziecommerce34.onrender.com)
+Para conferir o projeto finalizado [clique aqui](https://connectplus.vercel.app/)
 
 A URL base da API é:
 
@@ -58,4 +58,4 @@ https://connect-plus-api.onrender.com
 
 ## Feito com 🤍 por:
 
--   Enzo Machado [![github](https://img.shields.io/badge/github-6e5494?style=for-the-badge&logo=github&logoColor=white)](https://github.com/m4chado) [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enzomachado01/)
+-   Enzo Machado [![github](https://img.shields.io/badge/github-6e5494?style=for-the-badge&logo=github&logoColor=white)](https://github.com/m4chado) [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enzomachadodev/)
