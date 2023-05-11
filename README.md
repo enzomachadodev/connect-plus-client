@@ -1,7 +1,7 @@
 # Connect Plus
 
 <h1 align="center">
-   <img src="./frontend/public/logo.png" alt="logo" /> 
+   <img src="https://github.com/m4chado/Connect-Plus/blob/main/connect-plus.png?raw=true" alt="logo" /> 
 </h1>
 
 ## 📃Conteúdos da Página:
