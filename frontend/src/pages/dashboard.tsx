@@ -1,6 +1,6 @@
 import { AddContact } from "@/components/modals/AddContact";
 import { AddCustomer } from "@/components/modals/AddCustomer";
-import { CurrentCustomer } from "@/components/CurrentCustomer.tsx";
+import { CurrentCustomer } from "@/components/CurrentCustomer";
 import { CustomersList } from "@/components/CustomersList";
 import { DeleteContact } from "@/components/modals/DeleteContact";
 import { DeleteCustomer } from "@/components/modals/DeleteCustomer";
