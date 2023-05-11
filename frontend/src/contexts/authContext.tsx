@@ -1,11 +1,12 @@
 import { api } from "@/services/api";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { User, UserCreateRequest, UserLoginRequest } from "@/types/users";
 import { UseFormReset } from "react-hook-form";
+import { CustomerContext } from "./customerContext";
 
 interface IAuthContextData {
 	currentUser: User | null;
@@ -36,6 +37,7 @@ interface IAuthProviderProps {
 export const AuthContext = createContext({} as IAuthContextData);
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
+	const { setRetrieveCustomer } = useContext(CustomerContext);
 	const route = useRouter();
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
 	const [authLoading, setAuthLoading] = useState(false);
@@ -43,6 +45,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 	const logoutUser = () => {
 		setCurrentUser(null);
 		destroyCookie(null, "connectplus.token");
+		setRetrieveCustomer(null);
 
 		api.defaults.headers.common.Authorization = "";
 

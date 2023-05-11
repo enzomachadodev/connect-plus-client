@@ -1,5 +1,5 @@
 import { SelectedCustomer } from "./SelectedCustomer";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CustomerContext } from "@/contexts/customerContext";
 import { ModalContext } from "@/contexts/modalContext";
 import { FiDownload, FiPlus } from "react-icons/fi";

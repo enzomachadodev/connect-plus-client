@@ -9,12 +9,12 @@ interface ProvidersProps {
 
 export const Providers = ({ children }: ProvidersProps) => {
 	return (
-		<AuthProvider>
+		<ModalProvider>
 			<CustomerProvider>
 				<ContactProvider>
-					<ModalProvider>{children}</ModalProvider>
+					<AuthProvider>{children}</AuthProvider>
 				</ContactProvider>
 			</CustomerProvider>
-		</AuthProvider>
+		</ModalProvider>
 	);
 };

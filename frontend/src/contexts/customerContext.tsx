@@ -13,6 +13,7 @@ interface ICustomerContextData {
 	customersList: Customer[];
 	setCustomersList: React.Dispatch<React.SetStateAction<Customer[]>>;
 	retrieveCustomer: Customer | null;
+	setRetrieveCustomer: React.Dispatch<React.SetStateAction<Customer | null>>;
 	createCustomer: (data: CustomerCreateRequest, handleClose: () => void) => Promise<void>;
 	updateCustomer: (
 		data: CustomerUpdateRequest,
@@ -149,6 +150,7 @@ export const CustomerProvider = ({ children }: ICustomerProviderProps) => {
 				isLoading,
 				fetchCustomer,
 				retrieveCustomer,
+				setRetrieveCustomer,
 				customerLoading,
 				currentCustomer,
 				getCustomer,
