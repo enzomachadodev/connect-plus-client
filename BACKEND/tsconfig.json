@@ -1,9 +1,11 @@
 {
 	"compilerOptions": {
-		"sourceMap": true,
-		"outDir": "dist",
+		"outDir": "./dist",
+		"target": "es2020",
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
 		"strict": true,
-		"lib": ["esnext"],
-		"esModuleInterop": true
+		"skipLibCheck": true
 	}
 }
